@@ -35,9 +35,7 @@ mongoose
 	.catch((e) => console.log(e));
 
 // Server display message
-app.get("/", (req, res) => {
-	res.json("Server is running on specified PORT");
-});
+app.get("/", (req, res) => res.status(200).json({ message: "Hello World" }));
 
 // parent routes config - e.g /<parent-route-name>/main-endpoint
 app.use("/auth", authRoutes);
