@@ -2,13 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const authRoutes = require("./routes/auth-routes/index");
-const mediaRoutes = require("./routes/instructor-routes/media-routes");
-const instructorCoursesRoutes = require("./routes/instructor-routes/course-routes");
-const studentCoursesRoutes = require("./routes/student-routes/course-routes");
-const studentOrderRoutes = require("./routes/student-routes/order-routes");
-const studentBoughtCoursesRoutes = require("./routes/student-routes/student-courses-routes");
-const studentCourseProgressRoutes = require("./routes/student-routes/course-progress-routes");
+const authRoutes = require("../routes/auth-routes/index");
+const mediaRoutes = require("../routes/instructor-routes/media-routes");
+const instructorCoursesRoutes = require("../routes/instructor-routes/course-routes");
+const studentCoursesRoutes = require("../routes/student-routes/course-routes");
+const studentOrderRoutes = require("../routes/student-routes/order-routes");
+const studentBoughtCoursesRoutes = require("../routes/student-routes/student-courses-routes");
+const studentCourseProgressRoutes = require("../routes/student-routes/course-progress-routes");
 
 // Create the node app
 const app = express();
