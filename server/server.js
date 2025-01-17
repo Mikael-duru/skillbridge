@@ -34,6 +34,11 @@ mongoose
 	.then(() => console.log("MongoDb is connected"))
 	.catch((e) => console.log(e));
 
+// Server display message
+app.get("/", (req, res) => {
+	res.json("Server is running on specified PORT");
+});
+
 // parent routes config - e.g /<parent-route-name>/main-endpoint
 app.use("/auth", authRoutes);
 app.use("/media", mediaRoutes);
