@@ -1,4 +1,5 @@
 import { useContext, useRef } from "react";
+import { Upload } from "lucide-react";
 
 import MediaProgressBar from "@/components/media-progress-bar";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,6 @@ import VideoPlayer from "@/components/video-player";
 import { CourseCurriculumInitialFormData } from "@/config";
 import { instructorContext } from "@/context/instructor-context/instructor-context";
 import { mediaBulkUpload, mediaDelete, mediaUpload } from "@/lib/actions";
-import { Upload } from "lucide-react";
 
 function CourseCurriculum() {
 	const {
