@@ -153,7 +153,7 @@ function StudentHomePage() {
 										alt="Course banner"
 										width={300}
 										height={150}
-										className="object-cover w-full h-40"
+										className="object-cover w-full h-48"
 									/>
 									<div className="p-4 ">
 										<h3 className="mb-2 font-bold">{courseItem?.title}</h3>
