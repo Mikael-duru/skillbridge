@@ -33,6 +33,20 @@ function CourseCurriculum() {
 		]);
 	};
 
+	const handleRemoveEmptyLecture = (currentIndex) => {
+		const copyCourseCurriculumFormData = [...courseCurriculumFormData];
+
+		// Check if the specific lecture is empty
+		if (
+			copyCourseCurriculumFormData[currentIndex]?.title.trim() === "" &&
+			copyCourseCurriculumFormData[currentIndex]?.freePreview === false
+		) {
+			copyCourseCurriculumFormData.splice(currentIndex, 1); // Remove the empty lecture
+			setCourseCurriculumFormData(copyCourseCurriculumFormData);
+		}
+	};
+
+	// handle form input function
 	const handleCourseTitleChange = (e, currentIndex) => {
 		const copyCourseCurriculumFormData = [...courseCurriculumFormData];
 
@@ -68,6 +82,7 @@ function CourseCurriculum() {
 					videoFormData,
 					setMediaUploadProgressPercentage
 				);
+
 				if (response.success) {
 					const copyCourseCurriculumFormData = [...courseCurriculumFormData];
 
@@ -87,6 +102,7 @@ function CourseCurriculum() {
 		}
 	};
 
+	// Replace video function
 	const handleReplaceVideo = async (currentIndex) => {
 		const copyCourseCurriculumFormData = [...courseCurriculumFormData];
 
@@ -108,6 +124,7 @@ function CourseCurriculum() {
 		}
 	};
 
+	// Validate lectures is not empty
 	const isCourseCurriculumFormDataValid = () => {
 		return courseCurriculumFormData.every((item) => {
 			return (
@@ -119,6 +136,7 @@ function CourseCurriculum() {
 		});
 	};
 
+	// handle open file input for bulk upload
 	const handleOpenBulkUploadDialog = () => {
 		bulkUploadInputRef.current?.click();
 	};
@@ -137,6 +155,7 @@ function CourseCurriculum() {
 		});
 	};
 
+	// handle bulk upload function
 	const handleMediaBulkUpload = async (e) => {
 		const selectedFiles = Array.from(e.target.files);
 		const bulkFormData = new FormData();
@@ -151,10 +170,8 @@ function CourseCurriculum() {
 				setMediaUploadProgressPercentage
 			);
 
-			console.log("BULK response:", response);
-
 			if (response.success) {
-				// Check if the course curriculum form data is empty or not
+				// Check if the course curriculum form data is empty
 				let copyCourseCurriculumFormData =
 					isCourseCurriculumFormDataObjectEmpty(courseCurriculumFormData)
 						? []
@@ -182,6 +199,7 @@ function CourseCurriculum() {
 		}
 	};
 
+	// handle delete lecture function
 	const handleDeleteLecture = async (currentIndex) => {
 		let copyCourseCurriculumFormData = [...courseCurriculumFormData];
 
@@ -226,6 +244,9 @@ function CourseCurriculum() {
 							<Upload className="w-4 h-5 mr-2" />
 							Bulk Upload
 						</Button>
+						<p className="mt-1 text-xs text-gray-400 lg:text-sm">
+							P.S: max of 15 lectures
+						</p>
 					</div>
 
 					{mediaUploadProgress ? (
@@ -285,12 +306,24 @@ function CourseCurriculum() {
 											</Button>
 										</div>
 									) : (
-										<Input
-											type="file"
-											accept="video/*"
-											onChange={(e) => handleSingleLectureUpload(e, index)}
-											className="pt-2 mb-4 cursor-pointer hover:border-[#008080]"
-										/>
+										<div className="">
+											<Input
+												type="file"
+												accept="video/*"
+												onChange={(e) => handleSingleLectureUpload(e, index)}
+												className="pt-2 mb-4 cursor-pointer hover:border-[#008080]"
+											/>
+											<Button
+												className="mt-2 bg-red-500"
+												disabled={
+													curriculumItem?.freePreview ||
+													curriculumItem?.title !== ""
+												}
+												onClick={() => handleRemoveEmptyLecture(index)}
+											>
+												Remove Lecture
+											</Button>
+										</div>
 									)}
 								</div>
 							</div>
