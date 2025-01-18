@@ -29,11 +29,18 @@ function StudentHomePage() {
 		setIsLoading(false);
 	}, []);
 
+	// Function to get all course
 	const fetchAllCourses = async () => {
 		const response = await getStudentCourseList();
 
 		if (response?.success) setCoursesList(response?.data);
 	};
+
+	// Sort courses by creation date (newest first)
+	const sortedCourses =
+		coursesList?.slice().sort((a, b) => {
+			return new Date(b.date) - new Date(a.date);
+		}) || [];
 
 	const handleNavigateToCategoryPage = (categoryId) => {
 		sessionStorage.removeItem("filters");
@@ -82,10 +89,10 @@ function StudentHomePage() {
 		return () => window.removeEventListener("resize", updateItemsPerPage); // Cleanup
 	}, []);
 
-	const totalPages = Math.ceil(coursesList.length / itemsPerPage);
+	const totalPages = Math.ceil(sortedCourses.length / itemsPerPage);
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
-	const currentCoursesList = coursesList.slice(startIndex, endIndex);
+	const currentCoursesList = sortedCourses.slice(startIndex, endIndex);
 
 	const handlePageChange = (page) => {
 		setCurrentPage(page);

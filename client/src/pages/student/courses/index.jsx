@@ -149,10 +149,16 @@ function StudentViewCoursesPage() {
 		return () => window.removeEventListener("resize", updateItemsPerPage); // Cleanup
 	}, []);
 
-	const totalPages = Math.ceil(coursesList.length / itemsPerPage);
+	// Sort courses by creation date (newest first)
+	const sortedCourses =
+		coursesList?.slice().sort((a, b) => {
+			return new Date(b.date) - new Date(a.date);
+		}) || [];
+
+	const totalPages = Math.ceil(sortedCourses.length / itemsPerPage);
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
-	const currentCoursesList = coursesList.slice(startIndex, endIndex);
+	const currentCoursesList = sortedCourses.slice(startIndex, endIndex);
 
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
