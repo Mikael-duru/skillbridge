@@ -19,11 +19,14 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 app.use(
 	cors({
-		origin: process.env.CLIENT_URL,
+		origin: process.env.CLIENT_URL || "*",
 		methods: ["GET", "POST", "DELETE", "PUT"],
 		allowedHeaders: ["Content-Type", "Authorization"],
 	})
 );
+
+// preflight request handling
+app.options("*", cors());
 
 // Handling middleware
 app.use(express.json());
