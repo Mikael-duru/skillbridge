@@ -8,18 +8,27 @@ const {
 // Create the router
 const router = express.Router();
 
-// Store uploaded files in the the uploads folder in the server.
-const upload = multer({ dest: "uploads/" });
+// multerConfig.js - Store uploaded files in multer memory storage.
+const storage = multer.memoryStorage();
+const uploads = multer({ storage });
+module.exports = uploads;
 
 // Methods
 
 // Upload a single file
-router.post("/upload", upload.single("file"), async (req, res) => {
+router.post("/upload", uploads.single("file"), async (req, res) => {
 	try {
-		const result = await uploadMediaToCloudinary(req.file.path);
+		const file = req.file;
+
+		if (!file) {
+			return res.status(400).send("No file uploaded.");
+		}
+
+		const uploadResult = await uploadMediaToCloudinary(file);
+
 		res.status(200).json({
 			success: true,
-			data: result,
+			data: uploadResult,
 		});
 	} catch (e) {
 		res.status(500).json({
@@ -30,17 +39,23 @@ router.post("/upload", upload.single("file"), async (req, res) => {
 });
 
 // Upload bulk file
-router.post("/bulk-upload", upload.array("files", 10), async (req, res) => {
+router.post("/bulk-upload", uploads.array("files", 15), async (req, res) => {
 	try {
-		const uploadPromises = req.files.map((fileItem) =>
-			uploadMediaToCloudinary(fileItem.path)
+		const files = req.files;
+
+		if (!files) {
+			return res.status(400).send("No files uploaded.");
+		}
+
+		const uploadPromises = files.map((fileItem) =>
+			uploadMediaToCloudinary(fileItem)
 		);
 
-		const result = await Promise.all(uploadPromises);
+		const uploadResult = await Promise.all(uploadPromises);
 
 		res.status(200).json({
 			success: true,
-			data: result,
+			data: uploadResult,
 		});
 	} catch (e) {
 		console.log(e);
@@ -54,6 +69,8 @@ router.post("/bulk-upload", upload.array("files", 10), async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
+
+		console.log("[MEDIA_DELETE_PARAMS_ID]:", id);
 
 		if (!id) {
 			return res.status(400).json({

@@ -8,13 +8,27 @@ cloudinary.config({
 });
 
 // Upload to cloudinary
-const uploadMediaToCloudinary = async (filePath) => {
+const uploadMediaToCloudinary = async (file) => {
 	try {
-		const result = await cloudinary.uploader.upload(filePath, {
-			resource_type: "auto",
+		const uploadResult = await new Promise((resolve, reject) => {
+			const uploadStream = cloudinary.uploader.upload_stream(
+				{
+					resource_type: "auto",
+				},
+				(error, result) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(result);
+					}
+				}
+			);
+
+			// Write the buffer to the stream
+			uploadStream.end(file.buffer);
 		});
 
-		return result;
+		return uploadResult;
 	} catch (error) {
 		console.log(error);
 		throw new Error("Error uploading to cloudinary");
