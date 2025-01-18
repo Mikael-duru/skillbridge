@@ -17,16 +17,17 @@ const app = express();
 const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
 
-app.use(
-	cors({
-		origin: process.env.CLIENT_URL || "*",
-		methods: ["GET", "POST", "DELETE", "PUT"],
-		allowedHeaders: ["Content-Type", "Authorization"],
-	})
-);
+const corsOptions = {
+	origin: process.env.CLIENT_URL || "*",
+	methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
+	allowedHeaders: ["Content-Type", "Authorization"],
+	credentials: true, // Allow cookies if needed
+};
 
-// preflight request handling
-app.options("*", cors());
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options("*", cors(corsOptions));
 
 // Handling middleware
 app.use(express.json());
