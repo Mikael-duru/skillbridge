@@ -18,7 +18,7 @@ const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 const corsOptions = {
-	origin: process.env.CLIENT_URL || "*",
+	origin: process.env.CLIENT_URL || "*", // Allow all origins or specify the client URL
 	methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
 	allowedHeaders: ["Content-Type", "Authorization"],
 	credentials: true, // Allow cookies if needed
