@@ -28,13 +28,16 @@ function AuthPage() {
 	} = useContext(AuthContext);
 
 	useEffect(() => {
-		sessionStorage.removeItem("currentTab", activeTab);
-	}, []);
-
-	useEffect(() => {
 		// Update sessionStorage whenever activeTab changes
 		sessionStorage.setItem("authTab", activeTab);
 	}, [activeTab]);
+
+	// Clears session storage when you leave the page
+	useEffect(() => {
+		return () => {
+			sessionStorage.removeItem("authTab");
+		};
+	}, []);
 
 	const checkIfSignInFormIsValid = () => {
 		return (

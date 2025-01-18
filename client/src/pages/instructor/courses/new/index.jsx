@@ -129,9 +129,14 @@ function AddNewCoursePage() {
 	}, [params?.courseId]);
 
 	useEffect(() => {
-		// Update sessionStorage whenever activeTab changes
 		sessionStorage.setItem("createCourseTab", activeTab);
 	}, [activeTab]);
+
+	useEffect(() => {
+		return () => {
+			sessionStorage.removeItem("createCourseTab");
+		};
+	}, []);
 
 	return (
 		<div className="container mx-auto">

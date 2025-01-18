@@ -33,7 +33,9 @@ function InstructorDashboardPage() {
 	}, [activeTab]);
 
 	useEffect(() => {
-		sessionStorage.removeItem("createCourseTab", activeTab);
+		return () => {
+			sessionStorage.removeItem("currentTab");
+		};
 	}, []);
 
 	// Sort courses by creation date (newest first)
