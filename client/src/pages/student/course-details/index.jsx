@@ -151,8 +151,8 @@ function CourseDetailsPage() {
 		},
 		text: "Pay with Paystack",
 		onSuccess: () => {
-			// navigate("/student/course/list");
-			window.location.href = "/student/course/list";
+			sessionStorage.setItem("isCourseBought", JSON.stringify(true));
+			navigate("/student/course/list");
 		},
 		onClose: () => {
 			toast.error("Transaction canceled");

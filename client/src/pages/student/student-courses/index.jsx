@@ -43,6 +43,15 @@ function StudentCoursesPage() {
 		fetchStudentBoughtCourses();
 	}, []);
 
+	const isCourseBought = JSON.parse(sessionStorage.getItem("isCourseBought"));
+
+	useEffect(() => {
+		if (isCourseBought) {
+			fetchStudentBoughtCourses();
+			sessionStorage.removeItem("isCourseBought");
+		}
+	}, [isCourseBought]);
+
 	// Sort courses by date of purchase (newest first)
 	const sortedStudentBoughtCourses =
 		studentBoughtCoursesList?.slice().sort((a, b) => {
