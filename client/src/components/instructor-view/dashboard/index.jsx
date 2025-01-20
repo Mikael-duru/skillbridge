@@ -7,11 +7,12 @@ function InstructorDashboard({ listOfCourses }) {
 	const calculateTotalStudentsAndProfit = () => {
 		const { totalStudents, totalProfit, studentList } = listOfCourses.reduce(
 			(acc, course) => {
-				const studentCount = course?.students?.length;
+				const studentCount = course?.students?.length || 0;
 				acc.totalStudents += studentCount;
-				acc.totalProfit += course?.pricing * studentCount;
 
 				course.students.forEach((student) => {
+					const paidAmount = parseFloat(student?.paidAmount) || 0; // Convert to float
+					acc.totalProfit += paidAmount;
 					acc.studentList.push({
 						courseTitle: course?.title,
 						studentName: student?.studentName,
