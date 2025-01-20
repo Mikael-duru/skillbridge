@@ -3,14 +3,13 @@ const Order = require("../../models/Order");
 const Course = require("../../models/Course");
 const StudentCourses = require("../../models/StudentCourses");
 
-const createOrder = async (req, res) => {
+const paypalCreateOrder = async (req, res) => {
 	try {
 		const {
 			studentId,
 			userName,
 			userEmail,
 			orderStatus,
-			paymentMethod,
 			paymentStatus,
 			orderDate,
 			paymentId,
@@ -62,6 +61,8 @@ const createOrder = async (req, res) => {
 					message: "Error while creating paypal payment!",
 				});
 			} else {
+				const paymentMethod = "PayPal";
+
 				const newlyCreatedCourseOrder = new Order({
 					studentId,
 					userName,
@@ -105,7 +106,7 @@ const createOrder = async (req, res) => {
 };
 
 // Capture payment and finalize payment;
-const finalizeOrder = async (req, res) => {
+const paypalFinalizeOrder = async (req, res) => {
 	try {
 		const { paymentId, payerId, orderId } = req.body;
 
@@ -184,4 +185,4 @@ const finalizeOrder = async (req, res) => {
 	}
 };
 
-module.exports = { createOrder, finalizeOrder };
+module.exports = { paypalCreateOrder, paypalFinalizeOrder };
