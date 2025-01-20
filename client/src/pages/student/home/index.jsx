@@ -103,7 +103,7 @@ function StudentHomePage() {
 		<div className="container mx-auto">
 			<main className="bg-white font-inter">
 				{/* Banner */}
-				<section className="flex items-center justify-between gap-6 px-4 py-8 max-lg:flex-col lg:px-8">
+				<section className="flex items-center justify-between gap-8 px-4 py-8 sm:pt-10 lg:gap-6 max-lg:flex-col lg:px-8">
 					<div className="text-center lg:pr-4 xl:pr-12 shrink-0 max-lg:pt-4">
 						<h1 className="xl:mb-2 text-2xl font-bold sm:mb-1 sm:text-[40px] xl:text-5xl">
 							Welcome to SkillBridge
