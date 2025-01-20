@@ -37,7 +37,7 @@ function CourseDetailsPage() {
 	const { auth } = useContext(AuthContext);
 
 	const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
-	const [amountInNgn, setAmountInNgn] = useState("");
+	const [amountInNgn, setAmountInNgn] = useState(null);
 	const [approvalUrl, setApprovalUrl] = useState("");
 	const [displayFreePreviewVideo, setDisplayFreePreviewVideo] = useState(null);
 	const [showFreePreviewDialog, setShowFreePreviewDialog] = useState(false);
@@ -130,14 +130,16 @@ function CourseDetailsPage() {
 	// Currency conversion (dollars to naira)
 	useEffect(() => {
 		const getAmountInNaira = async () => {
-			const amountInNaira = await convertUsdToNgn(
-				studentViewCourseDetails?.pricing
-			);
-			setAmountInNgn(amountInNaira);
+			if (studentViewCourseDetails?.pricing) {
+				const amountInNaira = await convertUsdToNgn(
+					studentViewCourseDetails.pricing
+				);
+				setAmountInNgn(amountInNaira);
+			}
 		};
 
 		getAmountInNaira();
-	}, []);
+	}, [studentViewCourseDetails?.pricing]);
 
 	// Paystack payment function
 	const componentProps = {
