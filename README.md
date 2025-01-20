@@ -20,7 +20,9 @@ This project is built using the following technologies:
 - **Express**: A minimal and flexible Node.js web application framework.
 - **MongoDB**: A NoSQL database for storing data.
 - **Multer**: A middleware for handling `multipart/form-data`, used for uploading files.
-- **PayPal**: A payment processing service for handling transactions.
+- **PayPal**: A payment processing service for handling transactions for international purchases.
+- **Paystack**: A payment processing service for handling transactions for local purchases in naira.
+- **ExchangeRate-API**: For currency conversion to the local currency.
 - **Cloudinary**: A cloud service for managing images and videos.
 - **Context API**: For state management in React.
 - **Tailwind CSS**: A utility-first CSS framework for styling.
@@ -89,4 +91,3 @@ Visit `http://localhost:<your_port>` in your browser to view the application.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-```
