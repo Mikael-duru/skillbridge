@@ -1,4 +1,5 @@
 import { default as axiosInstance } from "@/api/axiosInstance";
+import axios from "axios";
 
 export const register = async (formData) => {
 	const { data } = await axiosInstance.post("/auth/register", {
@@ -171,4 +172,22 @@ export const resetCourseProgress = async (studentId, courseId) => {
 	);
 
 	return data;
+};
+
+// Currency conversion
+export const convertUsdToNgn = async (amountInUsd) => {
+	const apiKey = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
+	const apiUrl = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
+
+	try {
+		const response = await axios.get(apiUrl);
+		const exchangeRate = response.data.conversion_rates.NGN;
+		const amountInNgn = amountInUsd * exchangeRate;
+		// console.log(
+		// 	`$${amountInUsd} USD is approximately ₦${amountInNgn.toFixed(2)} NGN.`
+		// );
+		return amountInNgn.toFixed(2);
+	} catch (error) {
+		console.error("Error fetching exchange rate:", error);
+	}
 };
