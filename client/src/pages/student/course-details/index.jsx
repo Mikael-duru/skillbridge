@@ -5,6 +5,7 @@ import VideoPlayer from "@/components/video-player";
 import { StudentContext } from "@/context/student-context/student-context";
 import {
 	checkCoursePurchaseInfo,
+	convertUsdToNgn,
 	createPayment,
 	getStudentCourseDetailsById,
 } from "@/lib/actions";
@@ -21,6 +22,8 @@ import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "@/context/auth-context/auth-context";
+import { toast } from "react-toastify";
+import { PaystackButton } from "react-paystack";
 
 function CourseDetailsPage() {
 	const {
@@ -33,11 +36,14 @@ function CourseDetailsPage() {
 	} = useContext(StudentContext);
 	const { auth } = useContext(AuthContext);
 
+	const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+	const [amountInNgn, setAmountInNgn] = useState("");
 	const [approvalUrl, setApprovalUrl] = useState("");
 	const [displayFreePreviewVideo, setDisplayFreePreviewVideo] = useState(null);
 	const [showFreePreviewDialog, setShowFreePreviewDialog] = useState(false);
 	const [selectedFreePreviewLectureId, setSelectedFreePreviewLectureId] =
 		useState(null);
+	const [openPaymentOptions, setOpenPaymentOptions] = useState(false);
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const location = useLocation();
@@ -91,25 +97,25 @@ function CourseDetailsPage() {
 		handleSetFreePreview(curriculumItem);
 	};
 
-	const handleCreatePayment = async () => {
-		const paymentPayload = {
-			studentId: auth?.user?._id,
-			userName: auth?.user?.fullName,
-			userEmail: auth?.user?.userEmail,
-			orderStatus: "pending",
-			paymentMethod: "paypal",
-			paymentStatus: "initiated",
-			orderDate: new Date(),
-			paymentId: "",
-			payerId: "",
-			instructorId: studentViewCourseDetails?.instructorId,
-			instructorName: studentViewCourseDetails?.instructorName,
-			courseImage: studentViewCourseDetails?.image?.imageUrl,
-			courseTitle: studentViewCourseDetails?.title,
-			courseId: studentViewCourseDetails?._id,
-			coursePricing: studentViewCourseDetails?.pricing,
-		};
+	const paymentPayload = {
+		studentId: auth?.user?._id,
+		userName: auth?.user?.fullName,
+		userEmail: auth?.user?.userEmail,
+		orderStatus: "pending",
+		paymentStatus: "initiated",
+		orderDate: new Date(),
+		paymentId: "",
+		payerId: "",
+		instructorId: studentViewCourseDetails?.instructorId,
+		instructorName: studentViewCourseDetails?.instructorName,
+		courseImage: studentViewCourseDetails?.image?.imageUrl,
+		courseTitle: studentViewCourseDetails?.title,
+		courseId: studentViewCourseDetails?._id,
+		coursePricing: studentViewCourseDetails?.pricing,
+	};
 
+	//Paypal payment function
+	const handlePayWithPaypal = async () => {
 		const result = await createPayment(paymentPayload);
 
 		if (result.success) {
@@ -119,6 +125,36 @@ function CourseDetailsPage() {
 			);
 			setApprovalUrl(result?.data?.approvalUrl);
 		}
+	};
+
+	// Currency conversion (dollars to naira)
+	useEffect(() => {
+		const getAmountInNaira = async () => {
+			const amountInNaira = await convertUsdToNgn(
+				studentViewCourseDetails?.pricing
+			);
+			setAmountInNgn(amountInNaira);
+		};
+
+		getAmountInNaira();
+	}, []);
+
+	// Paystack payment function
+	const componentProps = {
+		email: auth?.user?.userEmail,
+		amount: amountInNgn * 100,
+		publicKey,
+		metadata: {
+			paymentPayload,
+		},
+		text: "Pay with Paystack",
+		onSuccess: () => {
+			// navigate("/student/course/list");
+			window.location.href = "/student/course/list";
+		},
+		onClose: () => {
+			toast.error("Transaction canceled");
+		},
 	};
 
 	useEffect(() => {
@@ -258,11 +294,33 @@ function CourseDetailsPage() {
 							</div>
 							<Button
 								variant="secondary"
-								className="w-full"
-								onClick={handleCreatePayment}
+								className={`w-full ${
+									!openPaymentOptions ? "mb-4" : ""
+								} transition-all duration-300`}
+								onClick={() => setOpenPaymentOptions(!openPaymentOptions)}
 							>
 								Buy Now
 							</Button>
+							<div
+								className={`px-3 py-2 border border-[#008080]/10 rounded-md transition-all duration-500 ease-linear bg-[#fdfdfd] ${
+									openPaymentOptions ? "hidden" : "block"
+								}`}
+							>
+								<Button
+									variant="outline"
+									className="w-full mb-2 text-[#006060] hover:text-[#006060] font-bold"
+									onClick={handlePayWithPaypal}
+								>
+									Pay with PayPal
+								</Button>
+								<Button
+									variant="outline"
+									className="w-full text-[#006060]  font-bold hover:text-[#006060]"
+									asChild
+								>
+									<PaystackButton {...componentProps} />
+								</Button>
+							</div>
 						</CardContent>
 					</Card>
 				</aside>
