@@ -1,12 +1,16 @@
 const express = require("express");
 const {
-	createOrder,
-	finalizeOrder,
-} = require("../../controllers/student-controller/order-controller");
+	paypalCreateOrder,
+	paypalFinalizeOrder,
+} = require("../../controllers/student-controller/paypal-order-controller");
+const {
+	paystackWebhooks,
+} = require("../../controllers/student-controller/paystack-order-controller");
 
 const router = express.Router();
 
-router.post("/create", createOrder);
-router.post("/finalize", finalizeOrder);
+router.post("/create", paypalCreateOrder);
+router.post("/finalize", paypalFinalizeOrder);
+router.post("/paystack/webhooks", paystackWebhooks);
 
 module.exports = router;
