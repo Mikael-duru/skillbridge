@@ -1,6 +1,6 @@
-# Project Title
+# Project Overview
 
-A brief description of your project and its purpose.
+The SkillBridge app is a Learning Management System (LMS) designed to empower users with the latest tech skills. With a user-friendly interface and engaging content, SkillBridge aims to foster a dynamic learning environment that prepares individuals for the demands of the modern workforce.
 
 ## Table of Contents
 
@@ -10,7 +10,6 @@ A brief description of your project and its purpose.
 - [Features](#features)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Technologies Used
 
@@ -87,7 +86,3 @@ Visit `http://localhost:<your_port>` in your browser to view the application.
 - Image and video management with Cloudinary
 - Responsive design using Tailwind CSS
 - State management using Context API
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
