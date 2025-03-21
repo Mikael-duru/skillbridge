@@ -8,8 +8,6 @@ The SkillBridge app is a Learning Management System (LMS) designed to empower us
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
 
 ## Technologies Used
 
@@ -34,10 +32,10 @@ To get started with this project, clone the repository and install the necessary
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/Mikael-duru/skillbridge.git
 
 # Navigate into the project directory
-cd <project-directory>
+cd skillbridge
 
 # Install server dependencies
 cd server
@@ -51,11 +49,18 @@ npm install
 Make sure to create a `.env` file in the `server` directory with the following variables:
 
 ```
-MONGODB_URI=<your_mongodb_connection_string>
-CLIENT_URL=<your_client_url>
-PAYPAL_CLIENT_ID=<your_paypal_client_id>
-CLOUDINARY_URL=<your_cloudinary_url>
-PORT=<your_preferred_port>
+# Server
+  CLIENT_URL=
+  PORT=
+  MONGODB_URI=
+  CLOUDINARY_CLOUD_NAME=
+  CLOUDINARY_API_KEY=
+  CLOUDINARY_API_SECRET=
+  PAYPAL_CLIENT_ID=
+  PAYPAL_CLIENT_SECRET_KEY=
+
+# Client
+  VITE_BACKEND_URL=
 ```
 
 ## Usage
