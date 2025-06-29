@@ -18,6 +18,14 @@ export const login = async (formData) => {
 	return data;
 };
 
+export const resetPassword = async (formData) => {
+	const { data } = await axiosInstance.post("/auth/change-password", {
+		...formData,
+	});
+
+	return data;
+};
+
 export const checkAuth = async () => {
 	const { data } = await axiosInstance.get("/auth/check-auth");
 

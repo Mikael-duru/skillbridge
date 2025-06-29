@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { initialSignInFormData, initialSignUpFormData } from "@/config";
-import { checkAuth, login, register } from "@/lib/actions";
+import {
+	initialForgotPasswordFormData,
+	initialSignInFormData,
+	initialSignUpFormData,
+} from "@/config";
+import { checkAuth, login, register, resetPassword } from "@/lib/actions";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AuthContext } from "./auth-context";
 import { toast } from "react-toastify";
@@ -9,6 +13,9 @@ import { toast } from "react-toastify";
 export default function AuthProvider({ children }) {
 	const [signInFormData, setSignInFormData] = useState(initialSignInFormData);
 	const [signUpFormData, setSignUpFormData] = useState(initialSignUpFormData);
+	const [forgotPasswordFormData, setForgotPasswordFormData] = useState(
+		initialForgotPasswordFormData
+	);
 	const [auth, setAuth] = useState({
 		authenticate: false,
 		user: null,
@@ -29,6 +36,10 @@ export default function AuthProvider({ children }) {
 			}
 		} catch (error) {
 			console.error("[Error_Sign_Up]:", error?.response?.data);
+			toast.error(
+				error?.response?.data?.message ||
+					"An error occurred while creating your account."
+			);
 		}
 	};
 
@@ -56,6 +67,28 @@ export default function AuthProvider({ children }) {
 			}
 		} catch (error) {
 			console.error("[Error_Sign_In]:", error?.response?.data);
+			toast.error(
+				error?.response?.data?.message || "An error occurred while logging in."
+			);
+		}
+	};
+
+	const handleChangePassword = async (e) => {
+		e.preventDefault();
+
+		try {
+			const data = await resetPassword(forgotPasswordFormData);
+			if (data.success) {
+				setForgotPasswordFormData(initialForgotPasswordFormData);
+				toast.success(data.message);
+				setActiveTabToSignIn(true);
+			}
+		} catch (error) {
+			toast.error(
+				error?.response?.data?.message ||
+					"An error occurred while changing password."
+			);
+			console.error("[Error_Change_Password]:", error?.response?.data?.message);
 		}
 	};
 
@@ -112,8 +145,11 @@ export default function AuthProvider({ children }) {
 				setSignInFormData,
 				signUpFormData,
 				setSignUpFormData,
+				forgotPasswordFormData,
+				setForgotPasswordFormData,
 				handleRegisterUser,
 				handleLoginUser,
+				handleChangePassword,
 				auth,
 				resetCredentials,
 				activeTabToSignIn,

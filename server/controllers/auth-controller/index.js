@@ -3,34 +3,16 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
-	const { fullName, userName, userEmail, password, role } = req.body;
+	const { fullName, email, password, role } = req.body;
 
 	// Check for existing user by username and email
-	const existingUser = await User.findOne({
-		$or: [{ userName }, { userEmail }],
-	});
+	const existingUser = await User.findOne({ email });
 
 	if (existingUser) {
-		// Provide specific feedback for username and email
-		if (
-			existingUser.userName === userName &&
-			existingUser.userEmail === userEmail
-		) {
-			return res.status(400).json({
-				success: false,
-				message: "Username and email already exist.",
-			});
-		} else if (existingUser.userName === userName) {
-			return res.status(400).json({
-				success: false,
-				message: "Username already exists.",
-			});
-		} else if (existingUser.userEmail === userEmail) {
-			return res.status(400).json({
-				success: false,
-				message: "Email already exists.",
-			});
-		}
+		return res.status(400).json({
+			success: false,
+			message: "Email already exists.",
+		});
 	}
 
 	const hashPassword = await bcrypt.hash(password, 10);
@@ -38,8 +20,7 @@ const registerUser = async (req, res) => {
 	// Create the new user
 	const newUser = new User({
 		fullName,
-		userName,
-		userEmail,
+		email,
 		role,
 		password: hashPassword,
 	});
@@ -53,23 +34,15 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-	const { userNameOrEmail, userPassword } = req.body;
+	const { userEmail, userPassword } = req.body;
 
-	// Determine if userNameOrEmail is an email based on the presence of "@" character
-	const query = userNameOrEmail.includes("@")
-		? { userEmail: userNameOrEmail }
-		: { userName: userNameOrEmail };
-
-	// Attempt to find the user based on the constructed query
-	const checkUser = await User.findOne(query);
-
-	// const checkUser = await User.findOne({ userEmail });
+	const checkUser = await User.findOne({ email: userEmail });
 
 	if (!checkUser || !(await bcrypt.compare(userPassword, checkUser.password))) {
 		return res.status(401).json({
 			success: false,
 			message:
-				"Invalid credentials. \n Please check your username or email and password.",
+				"Invalid credentials. \n Please check your email and/or password.",
 		});
 	}
 
@@ -77,8 +50,7 @@ const loginUser = async (req, res) => {
 		{
 			_id: checkUser._id,
 			fullName: checkUser.fullName,
-			userName: checkUser.userName,
-			userEmail: checkUser.userEmail,
+			email: checkUser.email || userEmail,
 			role: checkUser.role,
 		},
 		"JWT_SECRET",
@@ -93,12 +65,40 @@ const loginUser = async (req, res) => {
 			user: {
 				_id: checkUser._id,
 				fullName: checkUser.fullName,
-				userName: checkUser.userName,
-				userEmail: checkUser.userEmail,
+				email: checkUser.email || userEmail,
 				role: checkUser.role,
 			},
 		},
 	});
 };
 
-module.exports = { registerUser, loginUser };
+const resetPassword = async (req, res) => {
+	const { userEmail, newPassword, confirmPassword } = req.body;
+
+	const checkUser = await User.findOne({ email: userEmail });
+	if (!checkUser) {
+		return res.status(404).json({
+			success: false,
+			message: "User not found.",
+		});
+	}
+
+	if (newPassword !== confirmPassword) {
+		return res.status(400).json({
+			success: false,
+			message: "Passwords do not match.",
+		});
+	}
+
+	const hashPassword = await bcrypt.hash(newPassword, 10);
+
+	checkUser.password = hashPassword;
+	await checkUser.save();
+
+	return res.status(200).json({
+		success: true,
+		message: "Password changed successfully!",
+	});
+};
+
+module.exports = { registerUser, loginUser, resetPassword };

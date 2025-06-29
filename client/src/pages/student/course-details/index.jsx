@@ -100,7 +100,7 @@ function CourseDetailsPage() {
 	const paymentPayload = {
 		studentId: auth?.user?._id,
 		userName: auth?.user?.fullName,
-		userEmail: auth?.user?.userEmail,
+		userEmail: auth?.user?.email,
 		orderStatus: "pending",
 		paymentStatus: "initiated",
 		orderDate: new Date(),
@@ -143,7 +143,7 @@ function CourseDetailsPage() {
 
 	// Paystack payment function
 	const componentProps = {
-		email: auth?.user?.userEmail,
+		email: auth?.user?.email,
 		amount: amountInNgn * 100,
 		publicKey,
 		metadata: {
@@ -151,8 +151,8 @@ function CourseDetailsPage() {
 		},
 		text: "Pay with Paystack",
 		onSuccess: () => {
-			sessionStorage.setItem("isCourseBought", JSON.stringify(true));
-			navigate("/student/course/list");
+			toast.success("Order processed successfully!");
+			window.location.href = "/student/course/list";
 		},
 		onClose: () => {
 			toast.error("Transaction canceled");
@@ -294,34 +294,37 @@ function CourseDetailsPage() {
 									${studentViewCourseDetails?.pricing}
 								</span>
 							</div>
-							<Button
-								variant="secondary"
-								className={`w-full ${
-									!openPaymentOptions ? "mb-4" : ""
-								} transition-all duration-300`}
-								onClick={() => setOpenPaymentOptions(!openPaymentOptions)}
-							>
-								Buy Now
-							</Button>
 							<div
-								className={`px-3 py-2 border border-[#008080]/10 rounded-md transition-all duration-500 ease-linear bg-[#fdfdfd] ${
-									openPaymentOptions ? "hidden" : "block"
-								}`}
+								className={`border border-[#008080]/10 rounded-md overflow-hidden transition-all duration-500 ease-linear`}
 							>
 								<Button
-									variant="outline"
-									className="w-full mb-2 text-[#006060] hover:text-[#006060] font-bold"
-									onClick={handlePayWithPaypal}
+									variant="secondary"
+									className="w-full rounded-b-none"
+									onClick={() => setOpenPaymentOptions((prev) => !prev)}
 								>
-									Pay with PayPal
+									Buy Now
 								</Button>
-								<Button
-									variant="outline"
-									className="w-full text-[#006060]  font-bold hover:text-[#006060]"
-									asChild
+
+								<div
+									className={`grid transition-all duration-500 ease-linear ${
+										openPaymentOptions ? "max-h-[500px] p-3" : "max-h-0 p-0"
+									} bg-[#fdfdfd]`}
 								>
-									<PaystackButton {...componentProps} />
-								</Button>
+									<Button
+										variant="outline"
+										className="w-full mb-2 text-[#006060] hover:text-[#006060] font-bold shadow-sm"
+										onClick={handlePayWithPaypal}
+									>
+										Pay with PayPal
+									</Button>
+									<Button
+										variant="outline"
+										className="w-full text-[#006060] shadow-sm font-bold hover:text-[#006060]"
+										asChild
+									>
+										<PaystackButton {...componentProps} />
+									</Button>
+								</div>
 							</div>
 						</CardContent>
 					</Card>

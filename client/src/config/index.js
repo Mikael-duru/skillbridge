@@ -3,18 +3,11 @@ export const signUpFormControls = [
 		name: "fullName",
 		label: "Full Name",
 		type: "text",
-		placeholder: "Enter your full name",
+		placeholder: "e.g John Doe",
 		componentType: "input",
 	},
 	{
-		name: "userName",
-		label: "Username",
-		type: "text",
-		placeholder: "Enter a username",
-		componentType: "input",
-	},
-	{
-		name: "userEmail",
+		name: "email",
 		label: "Email",
 		type: "email",
 		placeholder: "Enter your email",
@@ -31,10 +24,10 @@ export const signUpFormControls = [
 
 export const signInFormControls = [
 	{
-		name: "userNameOrEmail",
-		label: "Email or Username",
+		name: "userEmail",
+		label: "Email",
 		type: "text",
-		placeholder: "Enter your email or user name",
+		placeholder: "Enter your email",
 		componentType: "input",
 	},
 	{
@@ -46,16 +39,45 @@ export const signInFormControls = [
 	},
 ];
 
-export const initialSignInFormData = {
-	userNameOrEmail: "",
-	userPassword: "",
-};
+export const forgotPasswordFormControls = [
+	{
+		name: "userEmail",
+		label: "Email",
+		type: "text",
+		placeholder: "Enter your email",
+		componentType: "input",
+	},
+	{
+		name: "newPassword",
+		label: "New password",
+		type: "password",
+		placeholder: "Enter your password",
+		componentType: "input",
+	},
+	{
+		name: "confirmPassword",
+		label: "Confirm password",
+		type: "password",
+		placeholder: "Enter your password",
+		componentType: "input",
+	},
+];
 
 export const initialSignUpFormData = {
 	fullName: "",
-	userName: "",
-	userEmail: "",
+	email: "",
 	password: "",
+};
+
+export const initialSignInFormData = {
+	userEmail: "",
+	userPassword: "",
+};
+
+export const initialForgotPasswordFormData = {
+	userEmail: "",
+	newPassword: "",
+	confirmPassword: "",
 };
 
 export const languageOptions = [

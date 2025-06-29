@@ -43,15 +43,6 @@ function StudentCoursesPage() {
 		fetchStudentBoughtCourses();
 	}, []);
 
-	const isCourseBought = JSON.parse(sessionStorage.getItem("isCourseBought"));
-
-	useEffect(() => {
-		if (isCourseBought) {
-			fetchStudentBoughtCourses();
-			sessionStorage.removeItem("isCourseBought");
-		}
-	}, [isCourseBought]);
-
 	// Sort courses by date of purchase (newest first)
 	const sortedStudentBoughtCourses =
 		studentBoughtCoursesList?.slice().sort((a, b) => {
@@ -122,9 +113,14 @@ function StudentCoursesPage() {
 						</Card>
 					))
 				) : (
-					<h1 className="col-span-4 text-2xl font-medium">
-						You have not bought a course yet!
-					</h1>
+					<div className="flex flex-col items-center justify-center col-span-4 gap-6 h-[50vh]">
+						<h1 className="text-2xl font-medium text-center">
+							You have not bought a course yet!
+						</h1>
+						<Button variant="secondary" onClick={() => navigate("/courses")}>
+							Buy a Course
+						</Button>
+					</div>
 				)}
 			</div>
 
