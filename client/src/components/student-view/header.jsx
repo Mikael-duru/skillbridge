@@ -64,7 +64,7 @@ function StudentViewHeader() {
 						</Button>
 						<Button
 							onClick={handleLogout}
-							variant="secondary"
+							variant="destructive"
 							className="flex items-center gap-3 cursor-pointer"
 						>
 							<LogOut className="size-8" />
@@ -82,7 +82,7 @@ function StudentViewHeader() {
 							>
 								<Menu />
 							</NavigationMenuTrigger>
-							<NavigationMenuContent>
+							<NavigationMenuContent className="p-4">
 								<NavigationMenuLink>
 									<Button
 										variant="ghost"
@@ -100,7 +100,7 @@ function StudentViewHeader() {
 									<Button
 										variant="ghost"
 										onClick={() => navigate("/student/course/list")}
-										className="flex items-center w-full gap-3 my-1 rounded-none"
+										className="flex items-center justify-start w-full gap-3 mt-2 mb-3 rounded-none"
 									>
 										<span className="text-base font-medium">My Courses</span>
 										<TvMinimalPlay className="cursor-pointer size-6" />
@@ -108,9 +108,9 @@ function StudentViewHeader() {
 								</NavigationMenuLink>
 								<NavigationMenuLink>
 									<Button
-										variant="ghost"
+										variant="destructive"
 										onClick={handleLogout}
-										className="flex items-center w-full gap-3 rounded-none"
+										className="flex items-center justify-start w-full gap-3"
 									>
 										<LogOut />
 										<span className="text-base font-medium">Sign Out</span>
