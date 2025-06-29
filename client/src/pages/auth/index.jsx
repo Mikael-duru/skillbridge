@@ -23,7 +23,6 @@ function AuthPage() {
 	const [activeTab, setActiveTab] = useState(
 		() => sessionStorage.getItem("authTab") || "signin"
 	);
-	const [changePasswordTab, setChangePasswordTab] = useState(false);
 
 	const {
 		signInFormData,
@@ -39,7 +38,6 @@ function AuthPage() {
 	} = useContext(AuthContext);
 
 	const handleToggleChangePasswordTab = () => {
-		setChangePasswordTab((prev) => !prev);
 		setActiveTab("changePassword");
 	};
 
@@ -160,7 +158,6 @@ function AuthPage() {
 									<Button
 										variant="ghost"
 										onClick={() => {
-											setChangePasswordTab(false);
 											setActiveTab("signin");
 										}}
 									>
