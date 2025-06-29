@@ -28,23 +28,20 @@ function FormControls({ formControls = [], formData, setFormData }) {
 		if (!value) {
 			if (name === "fullName") {
 				error = "Full name is required.";
-			} else if (name === "userName") {
-				error = "Username is required.";
-			} else if (name === "userEmail") {
+			} else if (name === "email" || name === "userEmail") {
 				error = "Email is required.";
-			} else if (name === "userNameOrEmail") {
-				error = "Email or Username is required.";
-			} else if (name === "userPassword") {
+			} else if (
+				name === "password" ||
+				name === "userPassword" ||
+				name === "newPassword"
+			) {
 				error = "Password is required.";
+			} else if (name === "confirmPassword") {
+				error = "Confirm password is required.";
 			} else {
 				error = `${name} is required.`;
 			}
-		} else if (name === "userName" && value.includes("@")) {
-			error = "User name should not contain '@'.";
-		} else if (
-			name === "userEmail" &&
-			!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-		) {
+		} else if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
 			error = "Invalid email address.";
 		} else if (name === "password" && value.length < 6) {
 			error = "Password must be at least 6 characters";
