@@ -88,6 +88,7 @@ function CourseBanner() {
 									src={courseLandingFormData?.image?.imageUrl}
 									alt="course banner"
 									className="w-full"
+									loading="lazy"
 								/>
 							</div>
 							<Button

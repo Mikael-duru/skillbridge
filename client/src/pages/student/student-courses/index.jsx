@@ -93,6 +93,7 @@ function StudentCoursesPage() {
 									src={course?.courseImage}
 									alt={course?.title}
 									className="object-cover w-full mb-4 rounded-md h-52"
+									loading="lazy"
 								/>
 								<h3 className="mb-1 text-sm font-bold">{course?.title}</h3>
 								<p className="mb-2 text-sm text-gray-700">

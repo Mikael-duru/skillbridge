@@ -301,6 +301,7 @@ function StudentViewCoursesPage() {
 											src={courseItem?.image?.imageUrl}
 											alt="Course banner"
 											className="object-cover w-full h-full"
+											loading="lazy"
 										/>
 									</div>
 									<div className="flex-1">

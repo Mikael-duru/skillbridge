@@ -21,6 +21,7 @@ function NotFoundPage() {
 								src="/src/assets/404.png"
 								alt="404"
 								className="w-[600px] max-w-[75%] mx-auto"
+								loading="lazy"
 							/>
 						</div>
 						<h4 className="mb-5 text-xl max-sm:text-base">

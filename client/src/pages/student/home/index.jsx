@@ -117,6 +117,7 @@ function StudentHomePage() {
 							src={banner}
 							width={600}
 							height={400}
+							loading="lazy"
 							className="w-full h-auto rounded-lg shadow-lg"
 						/>
 					</div>
@@ -154,6 +155,7 @@ function StudentHomePage() {
 										width={300}
 										height={150}
 										className="object-cover w-full h-48"
+										loading="lazy"
 									/>
 									<div className="p-4 ">
 										<h3 className="mb-2 font-bold">{courseItem?.title}</h3>
