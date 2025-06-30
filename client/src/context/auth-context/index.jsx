@@ -21,37 +21,37 @@ export default function AuthProvider({ children }) {
 		user: null,
 	});
 	const [loading, setLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 	const [activeTabToSignIn, setActiveTabToSignIn] = useState(false);
 
 	const handleRegisterUser = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		try {
-			toast.loading("Creating account...", { toastId: "register" });
 			const data = await register(signUpFormData);
 
 			if (data.success) {
 				setSignUpFormData(initialSignUpFormData);
 				setActiveTabToSignIn(true);
-				toast.success("Account created successfully!", { toastId: "register" });
+				toast.success("Account created successfully!");
 			}
 		} catch (error) {
 			console.error("[Error_Sign_Up]:", error?.response?.data);
 			toast.error(
 				error?.response?.data?.message ||
-					"An error occurred while creating your account.",
-				{
-					toastId: "register",
-				}
+					"An error occurred while creating your account."
 			);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	const handleLoginUser = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		try {
-			toast.loading("Logging in...", { toastId: "login" });
 			const data = await login(signInFormData);
 
 			if (data.success) {
@@ -64,7 +64,6 @@ export default function AuthProvider({ children }) {
 					user: data.data.user,
 				});
 				setSignInFormData(initialSignInFormData);
-				toast.dismiss("login");
 			} else {
 				setAuth({
 					authenticate: false,
@@ -74,34 +73,32 @@ export default function AuthProvider({ children }) {
 		} catch (error) {
 			console.error("[Error_Sign_In]:", error?.response?.data);
 			toast.error(
-				error?.response?.data?.message || "An error occurred while logging in.",
-				{
-					toastId: "login",
-				}
+				error?.response?.data?.message || "An error occurred while logging in."
 			);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	const handleChangePassword = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		try {
-			toast.loading("Changing password...", { toastId: "change-password" });
 			const data = await resetPassword(forgotPasswordFormData);
 			if (data.success) {
 				setForgotPasswordFormData(initialForgotPasswordFormData);
-				toast.success(data.message, { toastId: "change-password" });
+				toast.success("Password changed successfully!");
 				setActiveTabToSignIn(true);
 			}
 		} catch (error) {
 			toast.error(
 				error?.response?.data?.message ||
-					"An error occurred while changing password.",
-				{
-					toastId: "change-password",
-				}
+					"An error occurred while changing password."
 			);
 			console.error("[Error_Change_Password]:", error?.response?.data?.message);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -163,6 +160,7 @@ export default function AuthProvider({ children }) {
 				handleRegisterUser,
 				handleLoginUser,
 				handleChangePassword,
+				isLoading,
 				auth,
 				resetCredentials,
 				activeTabToSignIn,

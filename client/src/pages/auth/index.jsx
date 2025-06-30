@@ -34,6 +34,7 @@ function AuthPage() {
 		handleRegisterUser,
 		handleLoginUser,
 		handleChangePassword,
+		isLoading,
 		activeTabToSignIn,
 	} = useContext(AuthContext);
 
@@ -105,8 +106,12 @@ function AuthPage() {
 					>
 						{activeTab !== "changePassword" && (
 							<TabsList className="grid w-full grid-cols-2 mb-3">
-								<TabsTrigger value="signin">Sign In</TabsTrigger>
-								<TabsTrigger value="signup">Sign Up</TabsTrigger>
+								<TabsTrigger value="signin" disabled={isLoading}>
+									Sign In
+								</TabsTrigger>
+								<TabsTrigger value="signup" disabled={isLoading}>
+									Sign Up
+								</TabsTrigger>
 							</TabsList>
 						)}
 
@@ -129,6 +134,7 @@ function AuthPage() {
 										isButtonDisabled={!checkIfSignInFormIsValid()}
 										handleSubmit={handleLoginUser}
 										setChangePasswordTab={handleToggleChangePasswordTab}
+										isLoading={isLoading}
 									/>
 								</CardContent>
 							</Card>
@@ -152,6 +158,7 @@ function AuthPage() {
 										isButtonDisabled={!checkIfChangePasswordFormIsValid()}
 										handleSubmit={handleChangePassword}
 										setChangePasswordTab={handleToggleChangePasswordTab}
+										isLoading={isLoading}
 									/>
 								</CardContent>
 								<div className="text-center">
@@ -186,6 +193,7 @@ function AuthPage() {
 										setFormData={setSignUpFormData}
 										isButtonDisabled={!checkIfSignUpFormIsValid()}
 										handleSubmit={handleRegisterUser}
+										isLoading={isLoading}
 									/>
 								</CardContent>
 							</Card>
