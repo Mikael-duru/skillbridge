@@ -161,9 +161,9 @@ function AuthPage() {
 										isLoading={isLoading}
 									/>
 								</CardContent>
-								<div className="text-center">
+								<div className="pt-2 pb-6 text-center">
 									<Button
-										variant="ghost"
+										variant="outline"
 										onClick={() => {
 											setActiveTab("signin");
 										}}
