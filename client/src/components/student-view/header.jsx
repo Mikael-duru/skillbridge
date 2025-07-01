@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GraduationCap, LogOut, Menu, TvMinimalPlay } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { Button } from "../ui/button";
 import { AuthContext } from "@/context/auth-context/auth-context";
@@ -15,7 +15,9 @@ import {
 
 function StudentViewHeader() {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const isCourses = location.pathname.includes("/courses");
+	const isMyCourses = location.pathname.includes("/student/course/list");
 
 	const { resetCredentials } = useContext(AuthContext);
 
@@ -41,12 +43,12 @@ function StudentViewHeader() {
 						<Button
 							variant="ghost"
 							onClick={() => {
-								isCourses ? null : navigate("/courses");
+								navigate("/courses");
 							}}
-							className={`text-sm font-medium transition-transform duration-300 md:text-base bg-gray-50 hover:scale-105 active:scale-95 ${
+							className={`text-sm font-medium transition-transform duration-300 md:text-base bg-gray-50 ${
 								isCourses
-									? "pointer-events-none text-[#008080] border-[#008080]/50 border"
-									: ""
+									? "text-[#008080] hover:text-[#008080] hover:bg-initial border-[#008080]/50 border"
+									: "hover:scale-105 active:scale-95"
 							}`}
 						>
 							Explore Courses
@@ -59,7 +61,11 @@ function StudentViewHeader() {
 						<Button
 							variant="outline"
 							onClick={() => navigate("/student/course/list")}
-							className="flex items-center gap-3 transition-transform duration-300 cursor-pointer hover:scale-105 active:scale-95"
+							className={`flex items-center gap-3 transition-transform duration-300 cursor-pointer ${
+								isMyCourses
+									? "text-[#008080] hover:text-[#008080] border-[#008080]/50 hover:bg-initial"
+									: "hover:scale-105 active:scale-95"
+							}`}
 						>
 							<span className="font-extrabold text-sm md:text-base tracking-[0.02em]">
 								My Courses
@@ -91,11 +97,13 @@ function StudentViewHeader() {
 									<Button
 										variant="ghost"
 										onClick={() => {
-											location.pathname.includes("/courses")
-												? null
-												: navigate("/courses");
+											navigate("/courses");
 										}}
-										className="w-full mb-2 text-base font-medium sm:hidden bg-gray-50 active:scale-95"
+										className={`w-full mb-2 text-base font-medium sm:hidden bg-gray-50 ${
+											isCourses
+												? "text-[#008080] hover:text-[#008080] hover:bg-initial border-[#008080]/50 border"
+												: "active:scale-95"
+										}`}
 									>
 										Explore Courses
 									</Button>
@@ -104,7 +112,11 @@ function StudentViewHeader() {
 									<Button
 										variant="ghost"
 										onClick={() => navigate("/student/course/list")}
-										className="flex items-center justify-start w-full gap-3 mb-3 bg-gray-50 active:scale-95"
+										className={`flex items-center justify-start w-full gap-3 mb-3 bg-gray-50 ${
+											isMyCourses
+												? "text-[#008080] hover:text-[#008080] border-[#008080]/50 hover:bg-initial"
+												: "active:scale-95"
+										}`}
 									>
 										<span className="text-base font-medium">My Courses</span>
 										<TvMinimalPlay className="cursor-pointer size-6" />
