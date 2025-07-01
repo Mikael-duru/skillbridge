@@ -90,9 +90,9 @@ function StudentHomePage() {
 				<motion.section className="flex items-center justify-between gap-10 px-4 py-16 lg:py-24 md:gap-20 max-md:flex-col lg:px-8">
 					<div className="space-y-3 lg:space-y-4 xl:pr-16 shrink-0">
 						<motion.h1
-							initial={{ opacity: 0, y: -20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.5, delay: 0.3 }}
+							initial={{ y: -20, opacity: 0 }}
+							whileInView={{ y: 0, opacity: 1 }}
+							transition={{ duration: 0.6, delay: 0.3 }}
 							className="text-[26.5px] xs:text-4xl max-md:text-center font-bold sm:text-[42px] lg:text-6xl xl:text-[90px] leading-[1]"
 						>
 							Welcome to{" "}
@@ -101,9 +101,9 @@ function StudentHomePage() {
 							</span>
 						</motion.h1>
 						<motion.p
-							initial={{ opacity: 0, y: -30 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.5, delay: 0.5 }}
+							initial={{ y: -30, opacity: 0 }}
+							whileInView={{ y: 0, opacity: 1 }}
+							transition={{ duration: 0.8, delay: 0.5 }}
 							className="text-sm max-md:text-center lg:text-base xl:text-lg w-full md:w-[30ch] xl:w-full"
 						>
 							Your gateway to practical, future-proof tech skills.
