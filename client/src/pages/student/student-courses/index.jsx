@@ -105,68 +105,66 @@ function StudentCoursesPage() {
 				My Courses
 			</motion.h1>
 
-			{loading ? (
-				<LoadingCircleSpinner />
-			) : (
-				<motion.ul
-					key={currentBoughtCoursesList?.length || 0}
-					variants={listVariants}
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: true, amount: 0.2 }}
-					className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]"
-				>
-					{currentBoughtCoursesList && currentBoughtCoursesList.length > 0 ? (
-						currentBoughtCoursesList.map((course) => (
-							<motion.li
-								key={course?.courseId}
-								variants={itemVariants3}
-								whileHover={{ scale: 1.03 }}
-							>
-								<Card className="flex flex-col">
-									<CardContent className="flex-grow p-4">
-										<img
-											src={course?.courseImage}
-											alt={course?.title}
-											className="object-cover w-full mb-4 rounded-md h-52"
-											loading="lazy"
-										/>
-										<h3 className="mb-1 text-sm font-bold">{course?.title}</h3>
-										<p className="mb-2 text-sm text-gray-700">
-											{course?.instructorName}
-										</p>
-									</CardContent>
-									<CardFooter>
-										<Button
-											onClick={() =>
-												navigate(`/student/course-progress/${course?.courseId}`)
-											}
-											className="flex-1"
-										>
-											<Watch className="mr-2 size-4" />
-											Start watching
-										</Button>
-									</CardFooter>
-								</Card>
-							</motion.li>
-						))
-					) : (
-						<motion.div
-							initial={{ opacity: 0 }}
-							whileInView={{ opacity: 1 }}
-							transition={{ duration: 0.5, delay: 1 }}
-							className="flex flex-col items-center justify-center col-span-4 gap-6 h-[50vh]"
+			<motion.ul
+				key={currentBoughtCoursesList?.length || 0}
+				variants={listVariants}
+				initial="hidden"
+				whileInView="visible"
+				viewport={{ once: true, amount: 0.2 }}
+				className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]"
+			>
+				{currentBoughtCoursesList && currentBoughtCoursesList.length > 0 ? (
+					currentBoughtCoursesList.map((course) => (
+						<motion.li
+							key={course?.courseId}
+							variants={itemVariants3}
+							whileHover={{ scale: 1.03 }}
 						>
-							<h1 className="text-2xl font-medium text-center">
-								You have not bought a course yet!
-							</h1>
-							<Button variant="secondary" onClick={() => navigate("/courses")}>
-								Buy a Course
-							</Button>
-						</motion.div>
-					)}
-				</motion.ul>
-			)}
+							<Card className="flex flex-col">
+								<CardContent className="flex-grow p-4">
+									<img
+										src={course?.courseImage}
+										alt={course?.title}
+										className="object-cover w-full mb-4 rounded-md h-52"
+										loading="lazy"
+									/>
+									<h3 className="mb-1 text-sm font-bold">{course?.title}</h3>
+									<p className="mb-2 text-sm text-gray-700">
+										{course?.instructorName}
+									</p>
+								</CardContent>
+								<CardFooter>
+									<Button
+										onClick={() =>
+											navigate(`/student/course-progress/${course?.courseId}`)
+										}
+										className="flex-1"
+									>
+										<Watch className="mr-2 size-4" />
+										Start watching
+									</Button>
+								</CardFooter>
+							</Card>
+						</motion.li>
+					))
+				) : loading ? (
+					<LoadingCircleSpinner />
+				) : (
+					<motion.div
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						transition={{ duration: 0.5, delay: 1 }}
+						className="flex flex-col items-center justify-center col-span-4 gap-6 h-[50vh]"
+					>
+						<h1 className="text-2xl font-medium text-center">
+							You have not bought a course yet!
+						</h1>
+						<Button variant="secondary" onClick={() => navigate("/courses")}>
+							Buy a Course
+						</Button>
+					</motion.div>
+				)}
+			</motion.ul>
 
 			{totalPages > 1 && (
 				<motion.div
