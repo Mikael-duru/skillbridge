@@ -148,7 +148,9 @@ function StudentCoursesPage() {
 						</motion.li>
 					))
 				) : loading ? (
-					<LoadingCircleSpinner />
+					<div className="col-span-4">
+						<LoadingCircleSpinner />
+					</div>
 				) : (
 					<motion.div
 						initial={{ opacity: 0 }}
