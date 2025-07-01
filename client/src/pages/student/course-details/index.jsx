@@ -31,6 +31,7 @@ import {
 	itemYVariants,
 	listVariants,
 } from "@/lib/utils";
+import LoadingCircleSpinner from "@/components/ui/loader";
 
 function CourseDetailsPage() {
 	const {
@@ -41,6 +42,7 @@ function CourseDetailsPage() {
 		loading,
 		setLoading,
 	} = useContext(StudentContext);
+
 	const { auth } = useContext(AuthContext);
 
 	const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
@@ -54,6 +56,10 @@ function CourseDetailsPage() {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const location = useLocation();
+
+	useEffect(() => {
+		if (id) setCurrentCourseDetailsId(id);
+	}, [id]);
 
 	const getStudentViewCourseDetails = async () => {
 		const checkCoursePurchaseInfoResponse = await checkCoursePurchaseInfo(
@@ -83,10 +89,6 @@ function CourseDetailsPage() {
 	useEffect(() => {
 		if (currentCourseDetailsId !== null) getStudentViewCourseDetails();
 	}, [currentCourseDetailsId]);
-
-	useEffect(() => {
-		if (id) setCurrentCourseDetailsId(id);
-	}, [id]);
 
 	useEffect(() => {
 		if (!location.pathname.includes("course/details")) {
@@ -170,8 +172,6 @@ function CourseDetailsPage() {
 		if (displayFreePreviewVideo !== null) setShowFreePreviewDialog(true);
 	}, [displayFreePreviewVideo]);
 
-	if (loading) return <Skeleton />;
-
 	if (approvalUrl !== "") {
 		window.location.href = approvalUrl;
 	}
@@ -182,6 +182,8 @@ function CourseDetailsPage() {
 					(item) => item.freePreview
 			  )
 			: -1;
+
+	if (loading) <LoadingCircleSpinner />;
 
 	return (
 		<motion.main
@@ -253,6 +255,7 @@ function CourseDetailsPage() {
 						</CardHeader>
 						<CardContent>
 							<motion.ul
+								key={studentViewCourseDetails?.objectives || 0}
 								variants={containerVariants}
 								initial="hidden"
 								whileInView="show"
@@ -297,6 +300,7 @@ function CourseDetailsPage() {
 						</CardHeader>
 						<CardContent>
 							<motion.ul
+								key={studentViewCourseDetails?.curriculum?.length || 0}
 								variants={listVariants}
 								initial="hidden"
 								animate="visible"
