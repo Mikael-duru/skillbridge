@@ -79,15 +79,15 @@ function StudentHomePage() {
 	const currentCoursesList = sortedCourses.slice(0, itemsPerPage);
 
 	return (
-		<div className="container mx-auto">
-			<main className="bg-white font-inter">
+		<motion.main
+			initial={{ opacity: 0 }}
+			whileInView={{ opacity: 1 }}
+			transition={{ duration: 1 }}
+			className="font-inter"
+		>
+			<div className="container mx-auto bg-white">
 				{/* Banner */}
-				<motion.section
-					initial={{ opacity: 0 }}
-					whileInView={{ opacity: 1 }}
-					transition={{ duration: 1 }}
-					className="flex items-center justify-between gap-10 px-4 py-16 lg:py-24 md:gap-20 max-md:flex-col lg:px-8"
-				>
+				<motion.section className="flex items-center justify-between gap-10 px-4 py-16 lg:py-24 md:gap-20 max-md:flex-col lg:px-8">
 					<div className="space-y-3 lg:space-y-4 xl:pr-16 shrink-0">
 						<motion.h1
 							initial={{ opacity: 0, y: -20 }}
@@ -109,18 +109,19 @@ function StudentHomePage() {
 							Your gateway to practical, future-proof tech skills.
 						</motion.p>
 					</div>
-					<motion.figure
-						initial={{ opacity: 0, x: 50 }}
-						whileInView={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.5, delay: 0.3 }}
+					<motion.div
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						transition={{ duration: 0.6, delay: 0.7 }}
 					>
 						<img
 							src={banner}
 							width={600}
 							height={400}
-							className="w-full h-auto rounded-lg shadow-lg"
+							loading="lazy"
+							className="w-full h-[500px] rounded-lg shadow-lg"
 						/>
-					</motion.figure>
+					</motion.div>
 				</motion.section>
 
 				{/* Course category */}
@@ -234,8 +235,8 @@ function StudentHomePage() {
 						</motion.div>
 					)}
 				</section>
-			</main>
-		</div>
+			</div>
+		</motion.main>
 	);
 }
 
