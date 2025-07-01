@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 
 import { courseCategories } from "@/config";
@@ -126,7 +125,7 @@ function StudentHomePage() {
 				</motion.section>
 
 				{/* Course category */}
-				<section className="px-4 py-8 bg-gray-100 lg:px-8">
+				<section className="px-4 py-10 bg-gray-100 lg:px-8">
 					<motion.h2
 						initial={{ opacity: 0, y: -20 }}
 						whileInView={{ opacity: 1, y: 0 }}
@@ -140,7 +139,7 @@ function StudentHomePage() {
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, amount: 0.2 }}
-						className="grid grid-cols-1 gap-x-6 gap-y-4 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
+						className="grid gap-x-6 gap-y-4  grid-cols-[repeat(auto-fill,minmax(220px,1fr))]"
 					>
 						{courseCategories.map((categoryItem) => (
 							<motion.li
