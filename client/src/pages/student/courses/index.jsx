@@ -85,7 +85,7 @@ function StudentViewCoursesPage() {
 			if (result?.data) {
 				navigate(`/student/course-progress/${currentCourseId}`);
 			} else {
-				navigate(`/course/details/${currentCourseId}`);
+				window.location.href = `/course/details/${currentCourseId}`;
 			}
 		}
 	};

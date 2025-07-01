@@ -1,7 +1,9 @@
 import { ArrowRight, GraduationCap } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 function StudentViewFooter() {
+	const location = useLocation();
 	const isCourses = location.pathname.includes("/courses");
 
 	return (
@@ -18,13 +20,11 @@ function StudentViewFooter() {
 							Make Your Next Career Move!
 						</motion.strong>
 
-						<motion.button
+						<motion.a
 							initial={{ opacity: 0, x: -30 }}
 							whileInView={{ opacity: 1, x: 0 }}
 							transition={{ duration: 0.5, delay: 0.4 }}
-							onClick={() => {
-								isCourses ? null : (window.location.href = "/courses");
-							}}
+							href="/courses"
 							className={`inline-flex items-center gap-2 px-8 py-3 text-black bg-white border border-white rounded-full hover:bg-transparent hover:text-white active:scale-105 ${
 								isCourses ? "pointer-events-none" : "animate-bounce"
 							}`}
@@ -34,7 +34,7 @@ function StudentViewFooter() {
 							</span>
 
 							<ArrowRight />
-						</motion.button>
+						</motion.a>
 					</div>
 
 					<div className="mt-20 border-t border-gray-100 sm:flex sm:items-center sm:justify-between">
