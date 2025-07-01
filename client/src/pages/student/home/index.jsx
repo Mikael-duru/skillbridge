@@ -119,7 +119,7 @@ function StudentHomePage() {
 							width={600}
 							height={400}
 							loading="lazy"
-							className="w-full h-[500px] rounded-lg shadow-lg"
+							className="w-full h-auto rounded-lg shadow-lg"
 						/>
 					</motion.div>
 				</motion.section>
