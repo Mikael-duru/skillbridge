@@ -110,22 +110,21 @@ function StudentHomePage() {
 						</motion.p>
 					</div>
 					<motion.figure
-						initial={{ opacity: 0, x: -50 }}
+						initial={{ opacity: 0, x: 50 }}
 						whileInView={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.5, delay: 0.5 }}
+						transition={{ duration: 0.5, delay: 0.3 }}
 					>
 						<img
 							src={banner}
 							width={600}
 							height={400}
-							loading="lazy"
 							className="w-full h-auto rounded-lg shadow-lg"
 						/>
 					</motion.figure>
 				</motion.section>
 
 				{/* Course category */}
-				<section className="px-4 py-10 bg-gray-100 lg:px-8">
+				<section className="px-4 pt-8 pb-10 bg-gray-100 lg:px-8">
 					<motion.h2
 						initial={{ opacity: 0, y: -20 }}
 						whileInView={{ opacity: 1, y: 0 }}
@@ -170,56 +169,54 @@ function StudentHomePage() {
 						Featured Categories
 					</motion.h2>
 
-					{loading ? (
-						<LoadingCircleSpinner />
-					) : (
-						<motion.ul
-							key={currentCoursesList?.length || 0}
-							variants={listVariants}
-							initial="hidden"
-							whileInView="visible"
-							viewport={{ once: true, amount: 0.2 }}
-							className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]"
-						>
-							{currentCoursesList && currentCoursesList.length > 0 ? (
-								currentCoursesList.map((courseItem) => (
-									<motion.li
-										key={courseItem?._id}
-										variants={itemVariants3}
-										whileHover={{ scale: 1.03 }}
-										className="overflow-hidden transition-colors duration-300 border rounded-lg shadow-sm cursor-pointer hover:shadow-lg"
-										onClick={() => handleCourseNavigate(courseItem?._id)}
-									>
-										<img
-											src={courseItem?.image?.imageUrl}
-											alt="Course banner"
-											width={300}
-											height={150}
-											className="object-cover w-full h-48"
-											loading="lazy"
-										/>
-										<div className="p-4">
-											<h3 className="mb-2 font-bold">{courseItem?.title}</h3>
-											<p className="mb-2 text-sm text-gray-700">
-												{courseItem?.instructorName}
-											</p>
-											<p className="text-base font-bold">
-												${courseItem?.pricing}
-											</p>
-										</div>
-									</motion.li>
-								))
-							) : (
-								<motion.h1
-									initial={{ opacity: 0 }}
-									whileInView={{ opacity: 1 }}
-									transition={{ duration: 0.8, delay: 0.4 }}
+					<motion.ul
+						key={currentCoursesList?.length || 0}
+						variants={listVariants}
+						initial="hidden"
+						whileInView="visible"
+						viewport={{ once: true, amount: 0.2 }}
+						className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]"
+					>
+						{currentCoursesList && currentCoursesList.length > 0 ? (
+							currentCoursesList.map((courseItem) => (
+								<motion.li
+									key={courseItem?._id}
+									variants={itemVariants3}
+									whileHover={{ scale: 1.03 }}
+									className="overflow-hidden transition-colors duration-300 border rounded-lg shadow-sm cursor-pointer hover:shadow-lg"
+									onClick={() => handleCourseNavigate(courseItem?._id)}
 								>
-									No Courses yet
-								</motion.h1>
-							)}
-						</motion.ul>
-					)}
+									<img
+										src={courseItem?.image?.imageUrl}
+										alt="Course banner"
+										width={300}
+										height={150}
+										className="object-cover w-full h-48"
+										loading="lazy"
+									/>
+									<div className="p-4">
+										<h3 className="mb-2 font-bold">{courseItem?.title}</h3>
+										<p className="mb-2 text-sm text-gray-700">
+											{courseItem?.instructorName}
+										</p>
+										<p className="text-base font-bold">
+											${courseItem?.pricing}
+										</p>
+									</div>
+								</motion.li>
+							))
+						) : loading ? (
+							<LoadingCircleSpinner />
+						) : (
+							<motion.h1
+								initial={{ opacity: 0 }}
+								whileInView={{ opacity: 1 }}
+								transition={{ duration: 0.8, delay: 0.4 }}
+							>
+								No Courses yet
+							</motion.h1>
+						)}
+					</motion.ul>
 
 					{currentCoursesList.length === itemsPerPage && (
 						<motion.div

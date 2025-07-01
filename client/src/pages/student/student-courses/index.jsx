@@ -154,7 +154,7 @@ function StudentCoursesPage() {
 						<motion.div
 							initial={{ opacity: 0 }}
 							whileInView={{ opacity: 1 }}
-							transition={{ duration: 0.8, delay: 0.4 }}
+							transition={{ duration: 0.5, delay: 1 }}
 							className="flex flex-col items-center justify-center col-span-4 gap-6 h-[50vh]"
 						>
 							<h1 className="text-2xl font-medium text-center">
