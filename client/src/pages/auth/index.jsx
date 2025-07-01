@@ -97,7 +97,7 @@ function AuthPage() {
 			<div className="flex flex-col min-h-screen font-inter">
 				<Header />
 
-				<div className="flex items-center justify-center min-h-[calc(100vh-56px)] bg-background px-[5%] font-inter py-12">
+				<div className="flex items-center justify-center h-[calc(100vh-56px)] bg-background px-[5%] font-inter py-20">
 					<Tabs
 						value={activeTab}
 						defaultValue="signin"

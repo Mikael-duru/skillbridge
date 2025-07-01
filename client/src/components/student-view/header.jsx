@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GraduationCap, LogOut, Menu, TvMinimalPlay } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "../ui/button";
 import { AuthContext } from "@/context/auth-context/auth-context";
@@ -15,6 +15,8 @@ import {
 
 function StudentViewHeader() {
 	const navigate = useNavigate();
+	const isCourses = location.pathname.includes("/courses");
+
 	const { resetCredentials } = useContext(AuthContext);
 
 	const handleLogout = () => {
@@ -26,36 +28,38 @@ function StudentViewHeader() {
 		<div className="container mx-auto">
 			<header className="relative flex items-center justify-between p-4 border-b font-inter ">
 				<div className="flex items-center space-x-4">
-					<Link
-						to={"/home"}
-						className="flex items-center justify-center text-[#008080] hover:text-[#007070]"
+					<a
+						href={"/"}
+						className="flex items-center justify-center text-[#008080] hover:text-[#007070] active:scale-95"
 					>
 						<GraduationCap className="w-8 h-8 mr-3" />
 						<span className="font-extrabold text-sm sm:text-base tracking-[0.02em]">
 							SkillBridge
 						</span>
-					</Link>
+					</a>
 					<div className="flex items-center space-x-1 max-sm:hidden">
 						<Button
 							variant="ghost"
 							onClick={() => {
-								location.pathname.includes("/courses")
-									? null
-									: navigate("/courses");
+								isCourses ? null : navigate("/courses");
 							}}
-							className="text-sm font-medium md:text-base bg-gray-50/40"
+							className={`text-sm font-medium transition-transform duration-300 md:text-base bg-gray-50 hover:scale-105 active:scale-95 ${
+								isCourses
+									? "pointer-events-none text-[#008080] border-[#008080]/50 border"
+									: ""
+							}`}
 						>
 							Explore Courses
 						</Button>
 					</div>
 				</div>
 
-				<div className="flex items-center max-sm:hidden">
+				<div className="flex items-center max-md:hidden">
 					<div className="flex items-center gap-2.5 md:gap-4">
 						<Button
-							variant="ghost"
+							variant="outline"
 							onClick={() => navigate("/student/course/list")}
-							className="flex items-center gap-3 cursor-pointer"
+							className="flex items-center gap-3 transition-transform duration-300 cursor-pointer hover:scale-105 active:scale-95"
 						>
 							<span className="font-extrabold text-sm md:text-base tracking-[0.02em]">
 								My Courses
@@ -73,7 +77,7 @@ function StudentViewHeader() {
 					</div>
 				</div>
 
-				<NavigationMenu rightZero={true} className="sm:hidden">
+				<NavigationMenu rightZero={true} className="md:hidden">
 					<NavigationMenuList>
 						<NavigationMenuItem>
 							<NavigationMenuTrigger
@@ -91,7 +95,7 @@ function StudentViewHeader() {
 												? null
 												: navigate("/courses");
 										}}
-										className="w-full text-base font-medium rounded-none"
+										className="w-full mb-2 text-base font-medium sm:hidden bg-gray-50 active:scale-95"
 									>
 										Explore Courses
 									</Button>
@@ -100,7 +104,7 @@ function StudentViewHeader() {
 									<Button
 										variant="ghost"
 										onClick={() => navigate("/student/course/list")}
-										className="flex items-center justify-start w-full gap-3 mt-2 mb-3 rounded-none"
+										className="flex items-center justify-start w-full gap-3 mb-3 bg-gray-50 active:scale-95"
 									>
 										<span className="text-base font-medium">My Courses</span>
 										<TvMinimalPlay className="cursor-pointer size-6" />

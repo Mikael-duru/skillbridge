@@ -15,9 +15,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 			<Button
 				onClick={handlePrevious}
 				disabled={currentPage === 1}
-				size="sm"
 				variant={currentPage === 1 ? "default" : "secondary"}
-				className="flex items-center justify-center"
+				className="flex items-center justify-center active:scale-95"
 			>
 				<ChevronLeft /> Previous
 			</Button>
@@ -26,10 +25,9 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 			</span>
 			<Button
 				onClick={handleNext}
-				size="sm"
 				disabled={currentPage === totalPages}
 				variant={currentPage === totalPages ? "default" : "secondary"}
-				className="flex items-center justify-center"
+				className="flex items-center justify-center active:scale-95"
 			>
 				Next <ChevronRight />
 			</Button>

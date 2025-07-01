@@ -18,7 +18,13 @@ import {
 	resetCourseProgress,
 } from "@/lib/actions";
 
-import { Check, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import {
+	ArrowLeftIcon,
+	Check,
+	ChevronLeft,
+	ChevronRight,
+	Play,
+} from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useNavigate, useParams } from "react-router-dom";
@@ -35,6 +41,7 @@ function StudentViewCourseProgressPage() {
 	const [showConfetti, setShowConfetti] = useState(false);
 	const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 	const [paused, setPaused] = useState(false);
+	const [activeTab, setActiveTab] = useState("content");
 
 	const { id } = useParams();
 
@@ -127,22 +134,21 @@ function StudentViewCourseProgressPage() {
 		<div className="container relative mx-auto overflow-x-hidden">
 			<main className="flex flex-col bg-[#1C1D1F] text-white font-inter">
 				{showConfetti && <Confetti />}
-				<div className="flex items-center justify-between p-4 bg-[#1C1D1F] border-b border-gray-700">
-					<div className="flex items-center space-x-4">
+				<div className="flex items-center h-[70px] justify-between p-4 bg-[#1C1D1F] border-b border-gray-700">
+					<div className="flex items-center gap-6">
 						<Button
-							className="text-white bg-[#333] hover:bg-[#008080] flex items-center"
-							size="sm"
+							className="bg-[#006060] hover:bg-[#008080] flex items-center active:scale-95 transition-transform duration-300"
 							onClick={() => navigate(-1)}
 						>
-							<ChevronLeft className="size-4" /> Back to Previous Page
+							<ArrowLeftIcon className="size-4" /> Return
 						</Button>
-						<h1 className="hidden text-lg font-bold md:block">
+						<h1 className="hidden text-lg font-bold sm:block">
 							{studentCurrentCourseProgress?.courseDetails?.title}
 						</h1>
 					</div>
 					<Button
 						onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-						className="bg-[#333] hover:bg-[#008080]"
+						className="bg-[#006060] hover:bg-[#008080] active:scale-95 transition-transform duration-300"
 					>
 						{isSideBarOpen ? (
 							<ChevronRight className="size-5" />
@@ -156,38 +162,50 @@ function StudentViewCourseProgressPage() {
 					<div
 						className={`flex-1 ${
 							isSideBarOpen ? "mr-[400px]" : ""
-						} transition-all duration-300`}
+						} transition-transform duration-300`}
 					>
-						<VideoPlayer
-							width="100%"
-							height="500px"
-							url={currentLecture?.videoUrl}
-							onProgressUpdate={setCurrentLecture}
-							progressData={currentLecture}
-							paused={paused} // Pass the paused state
-						/>
-						<div className="p-6 bg-[#1c1d1f]">
-							<h2 className="mb-2 text-2xl font-bold">
-								{currentLecture?.title}
-							</h2>
+						<div className="h-[calc(100vh-70px)]">
+							<VideoPlayer
+								width="100%"
+								height="100%"
+								url={currentLecture?.videoUrl}
+								onProgressUpdate={setCurrentLecture}
+								progressData={currentLecture}
+								paused={paused}
+							/>
 						</div>
 					</div>
+
+					{/* Menu bar */}
 					<div
-						className={`absolute top-[68.5px] right-0 bottom-0 w-full sm:w-[400px] border-l border-gray-700 transition-all duration-300 bg-[#1c1d1f] ${
+						className={`absolute top-[68.5px] right-0 bottom-0 w-full sm:w-[400px] border-l border-gray-700 transition-transform duration-300 bg-[#1c1d1f] ${
 							isSideBarOpen ? "translate-x-0" : "translate-x-full"
 						}`}
 					>
-						<Tabs defaultValue="content" className="flex flex-col h-full">
+						<Tabs
+							value={activeTab}
+							onValueChange={(value) => setActiveTab(value)}
+							defaultValue="content"
+							className="flex flex-col h-full"
+						>
 							<TabsList className="grid bg-[#1c1d1f] w-full grid-cols-2 p-0 h-14">
 								<TabsTrigger
 									value="content"
-									className="h-full text-black bg-white border-r rounded-none hover:bg-gray-100"
+									className={`h-full text-black bg-white border-r rounded-none hover:bg-gray-100 ${
+										activeTab === "content"
+											? "!bg-[#41c0c0]/50 !text-white"
+											: ""
+									}`}
 								>
 									Course Content
 								</TabsTrigger>
 								<TabsTrigger
 									value="overview"
-									className="h-full text-black bg-white rounded-none hover:bg-gray-100"
+									className={`h-full text-black bg-white rounded-none hover:bg-gray-100 ${
+										activeTab === "overview"
+											? "!bg-[#41c0c0]/50 !text-white"
+											: "border-r"
+									}`}
 								>
 									Overview
 								</TabsTrigger>
@@ -235,6 +253,7 @@ function StudentViewCourseProgressPage() {
 						</Tabs>
 					</div>
 				</div>
+
 				{/* Show buy course option for not-students */}
 				<Dialog open={lockCourse}>
 					<DialogContent className="sm:w-[425px]">
@@ -253,7 +272,7 @@ function StudentViewCourseProgressPage() {
 				<Dialog open={showCourseCompletedDialog}>
 					<DialogContent showOverlay={true} className="sm:w-[425px]">
 						<DialogHeader>
-							<DialogTitle className="mb-[2px] text-center">
+							<DialogTitle className="mb-1 text-center">
 								Congratulations!
 							</DialogTitle>
 							<DialogDescription className="flex flex-col gap-4 text-center">
@@ -261,11 +280,16 @@ function StudentViewCourseProgressPage() {
 								<span className="flex items-center justify-center gap-3">
 									<Button
 										variant="secondary"
+										className="active:scale-95 border border-[#008080]"
 										onClick={() => navigate("/student/course/list")}
 									>
-										My Courses Page
+										My Courses
 									</Button>
-									<Button variant="secondary" onClick={handleRewatchCourse}>
+									<Button
+										variant="outline"
+										className="text-[#008080] hover:text-[#008080] active:scale-95 border-[#008080]"
+										onClick={handleRewatchCourse}
+									>
 										Rewatch Course
 									</Button>
 								</span>

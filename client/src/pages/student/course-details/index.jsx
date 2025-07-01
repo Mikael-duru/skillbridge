@@ -17,13 +17,20 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { AuthContext } from "@/context/auth-context/auth-context";
 
 import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "@/context/auth-context/auth-context";
 import { toast } from "react-toastify";
 import { PaystackButton } from "react-paystack";
+import { motion } from "framer-motion";
+import {
+	containerVariants,
+	itemVariants2,
+	itemYVariants,
+	listVariants,
+} from "@/lib/utils";
 
 function CourseDetailsPage() {
 	const {
@@ -177,29 +184,64 @@ function CourseDetailsPage() {
 			: -1;
 
 	return (
-		<main className="container p-4 mx-auto font-inter">
+		<motion.main
+			initial={{ opacity: 0 }}
+			whileInView={{ opacity: 1 }}
+			transition={{ duration: 1 }}
+			className="container p-4 mx-auto font-inter"
+		>
 			<section className="p-5 text-white bg-gray-900 rounded-t-lg sm:p-8">
-				<h1 className="mb-2 sm:mb-4 text-[20px] font-bold sm:text-3xl">
+				<motion.h1
+					initial={{ opacity: 0, y: -20 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.3 }}
+					className="mb-2 sm:mb-4 text-[20px] font-bold sm:text-3xl"
+				>
 					{studentViewCourseDetails?.title}
-				</h1>
-				<p className="mb-4 sm:text-xl">{studentViewCourseDetails?.subtitle}</p>
+				</motion.h1>
+				<motion.p
+					initial={{ opacity: 0, y: -20 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, delay: 0.5 }}
+					className="mb-4 sm:text-xl"
+				>
+					{studentViewCourseDetails?.subtitle}
+				</motion.p>
 				<div className="flex flex-wrap items-center mt-4 text-xs sm:text-sm gap-y-3 gap-x-5 sm:gap-5">
-					<span className="shrink-0">
+					<motion.span
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.3 }}
+						className="shrink-0"
+					>
 						Created By {studentViewCourseDetails?.instructorName}
-					</span>
-					<span className="">
+					</motion.span>
+					<motion.span
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.4 }}
+					>
 						Created On {studentViewCourseDetails?.date.split("T")[0]}
-					</span>
-					<span className="flex items-center capitalize">
+					</motion.span>
+					<motion.span
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.5 }}
+						className="flex items-center capitalize"
+					>
 						<Globe className="mr-1 size-4" />
 						{studentViewCourseDetails?.primaryLanguage}
-					</span>
-					<span className="">
+					</motion.span>
+					<motion.span
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.6 }}
+					>
 						{studentViewCourseDetails?.students.length}{" "}
 						{studentViewCourseDetails?.students.length <= 1
 							? "Student"
 							: "Students"}
-					</span>
+					</motion.span>
 				</div>
 			</section>
 			<section className="flex gap-2 mt-4 lg:gap-8 max-lg:flex-col">
@@ -210,16 +252,26 @@ function CourseDetailsPage() {
 							<CardTitle>What you will learn:</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<ul className="grid grid-cols-1 gap-2 md:grid-cols-2">
+							<motion.ul
+								variants={containerVariants}
+								initial="hidden"
+								whileInView="show"
+								viewport={{ once: true, amount: 0.3 }}
+								className="grid grid-cols-1 gap-2 md:grid-cols-2"
+							>
 								{studentViewCourseDetails?.objectives
 									.split(",")
 									.map((objective, index) => (
-										<li key={index} className="flex items-center justify-start">
+										<motion.li
+											variants={itemYVariants}
+											key={index}
+											className="flex items-center justify-start"
+										>
 											<CheckCircle className="flex-shrink-0 mr-2 text-green-500 size-4 sm:size-5" />
 											<span className="text-sm sm:text-base">{objective}</span>
-										</li>
+										</motion.li>
 									))}
-							</ul>
+							</motion.ul>
 						</CardContent>
 					</Card>
 					{/* Description */}
@@ -228,9 +280,14 @@ function CourseDetailsPage() {
 							<CardTitle>Course Description</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<p className="text-sm sm:text-base">
+							<motion.p
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								transition={{ duration: 0.5, delay: 0.7 }}
+								className="text-sm sm:text-base"
+							>
 								{studentViewCourseDetails?.description}
-							</p>
+							</motion.p>
 						</CardContent>
 					</Card>
 					{/* Curriculum */}
@@ -239,10 +296,17 @@ function CourseDetailsPage() {
 							<CardTitle>Course Curriculum</CardTitle>
 						</CardHeader>
 						<CardContent>
-							{studentViewCourseDetails?.curriculum?.map(
-								(curriculumItem, index) => (
-									<ul key={index}>
-										<li
+							<motion.ul
+								variants={listVariants}
+								initial="hidden"
+								animate="visible"
+							>
+								{studentViewCourseDetails?.curriculum?.map(
+									(curriculumItem, index) => (
+										<motion.li
+											key={index}
+											variants={itemVariants2}
+											transition={{ duration: 0.8, delay: index * 0.1 }}
 											className={`${
 												curriculumItem?.freePreview
 													? "cursor-pointer"
@@ -266,14 +330,19 @@ function CourseDetailsPage() {
 											<span className="text-base sm:text-sm">
 												{curriculumItem?.title}
 											</span>
-										</li>
-									</ul>
-								)
-							)}
+										</motion.li>
+									)
+								)}
+							</motion.ul>
 						</CardContent>
 					</Card>
 				</div>
-				<aside className="w-full md:w-[500px] pb-10">
+				<motion.aside
+					initial={{ x: 30, opacity: 0 }}
+					whileInView={{ x: 0, opacity: 1 }}
+					transition={{ duration: 0.6, delay: 0.7 }}
+					className="w-full md:w-[500px] pb-10"
+				>
 					<Card className="sticky top-4">
 						<CardContent className="p-2 sm:p-6">
 							<div className="flex items-center justify-center mb-4 rounded-lg aspect-video">
@@ -328,7 +397,7 @@ function CourseDetailsPage() {
 							</div>
 						</CardContent>
 					</Card>
-				</aside>
+				</motion.aside>
 			</section>
 			<Dialog
 				open={showFreePreviewDialog}
@@ -374,7 +443,7 @@ function CourseDetailsPage() {
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
-		</main>
+		</motion.main>
 	);
 }
 
