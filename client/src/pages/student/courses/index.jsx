@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { ArrowUpDownIcon, ListFilter, X } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Cookies from "js-cookie";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

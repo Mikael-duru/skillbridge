@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Watch } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import { StudentContext } from "@/context/student-context/student-context";
 import { getStudentBoughtCourseById } from "@/lib/actions";

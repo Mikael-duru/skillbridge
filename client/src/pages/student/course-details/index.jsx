@@ -23,7 +23,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { PaystackButton } from "react-paystack";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {
 	containerVariants,
 	itemVariants2,
