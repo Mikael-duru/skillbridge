@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import { courseCategories } from "@/config";
-import banner from "/hero-banner.png?url";
+import banner from "/skillbridge-hero-banner.png?url";
 import { Button } from "@/components/ui/button";
 import { StudentContext } from "@/context/student-context/student-context";
 import { checkCoursePurchaseInfo, getStudentCourseList } from "@/lib/actions";
@@ -87,41 +87,56 @@ function StudentHomePage() {
 		>
 			<div className="container mx-auto bg-white">
 				{/* Banner */}
-				<motion.section className="flex items-center justify-between gap-10 px-4 py-16 lg:py-24 md:gap-20 max-md:flex-col lg:px-8">
-					<div className="space-y-3 lg:space-y-4 xl:pr-16 shrink-0">
+				<motion.section className="grid items-center grid-cols-1 gap-16 px-6 py-16 lg:px-8 lg:grid-cols-2">
+					<div className="xl:pr-16 shrink-0 max-lg:text-center">
 						<motion.h1
-							initial={{ y: -20, opacity: 0 }}
-							whileInView={{ y: 0, opacity: 1 }}
+							initial={{ x: -20, opacity: 0 }}
+							whileInView={{ x: 0, opacity: 1 }}
 							transition={{ duration: 0.6, delay: 0.3 }}
-							className="text-[26.5px] xs:text-4xl max-md:text-center font-bold sm:text-[42px] lg:text-6xl xl:text-[90px] leading-[1]"
+							className="text-4xl font-bold xl:mb-4 xl:text-6xl"
 						>
-							Welcome to{" "}
-							<span className="text-[#008080] md:block md:pt-2">
-								SkillBridge
-							</span>
+							Gain Future-Proof Tech Skills
 						</motion.h1>
+
 						<motion.p
-							initial={{ y: -30, opacity: 0 }}
-							whileInView={{ y: 0, opacity: 1 }}
+							initial={{ x: -30, opacity: 0 }}
+							whileInView={{ x: 0, opacity: 1 }}
 							transition={{ duration: 0.8, delay: 0.5 }}
-							className="text-sm max-md:text-center lg:text-base xl:text-lg w-full md:w-[30ch] xl:w-full"
+							className="mt-1.5 mb-6 text-base sm:text-lg xl:mb-8 xl:text-xl text-zinc-600 lg:w-[35ch] xl:w-full"
 						>
-							Your gateway to practical, future-proof tech skills.
+							Learn. Build. Succeed — with flexible online courses.
 						</motion.p>
+
+						<motion.a
+							initial={{ opacity: 0, x: -30 }}
+							whileInView={{ opacity: 1, x: 0 }}
+							whileHover={{ scale: 1.05 }}
+							transition={{ duration: 1, delay: 0.7 }}
+							href="/courses"
+							className="inline-block px-8 py-3 text-lg font-semibold text-white rounded-full bg-[#008080] active:scale-95"
+						>
+							Let&apos;s Get Started
+						</motion.a>
 					</div>
-					<motion.div
-						initial={{ opacity: 0 }}
-						whileInView={{ opacity: 1 }}
-						transition={{ duration: 0.6, delay: 0.7 }}
+					<motion.figure
+						initial={{ scale: 0 }}
+						whileInView={{ scale: 1 }}
+						transition={{
+							duration: 0.8,
+							type: "spring",
+							stiffness: 50,
+						}}
+						className="overflow-hidden border rounded-lg shadow-lg border-[#008080]/20 shrink-0"
 					>
 						<img
 							src={banner}
 							width={600}
 							height={400}
+							alt="Student learning online with SkillBridge LMS platform"
 							loading="lazy"
-							className="w-full h-auto rounded-lg shadow-lg"
+							className="object-cover w-full h-auto"
 						/>
-					</motion.div>
+					</motion.figure>
 				</motion.section>
 
 				{/* Course category */}
