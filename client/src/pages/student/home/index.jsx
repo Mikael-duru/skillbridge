@@ -154,7 +154,7 @@ function StudentHomePage() {
 						initial="hidden"
 						whileInView="visible"
 						viewport={{ once: true, amount: 0.2 }}
-						className="grid gap-x-6 gap-y-4  grid-cols-[repeat(auto-fill,minmax(220px,1fr))]"
+						className="grid gap-x-6 gap-y-4 pb-2 grid-cols-[repeat(auto-fill,minmax(250px,1fr))]"
 					>
 						{courseCategories.map((categoryItem) => (
 							<motion.li
@@ -222,7 +222,9 @@ function StudentHomePage() {
 								</motion.li>
 							))
 						) : loading ? (
-							<LoadingCircleSpinner />
+							<div className="flex items-center justify-center">
+								<LoadingCircleSpinner />
+							</div>
 						) : (
 							<motion.h1
 								initial={{ opacity: 0 }}
