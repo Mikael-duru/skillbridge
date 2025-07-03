@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 
 import { courseCategories } from "@/config";
-import banner from "/skillbridge-hero-banner.png?url";
+import banner from "/skillbridge-hero-banner.png";
 import { Button } from "@/components/ui/button";
 import { StudentContext } from "@/context/student-context/student-context";
 import { checkCoursePurchaseInfo, getStudentCourseList } from "@/lib/actions";
@@ -50,7 +50,7 @@ function StudentHomePage() {
 			if (result?.data) {
 				navigate(`/student/course-progress/${currentCourseId}`);
 			} else {
-				navigate(`/course/details/${currentCourseId}`);
+				window.location.href = `/course/details/${currentCourseId}`;
 			}
 		}
 	};
