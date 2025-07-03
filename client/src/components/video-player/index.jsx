@@ -33,10 +33,7 @@ function VideoPlayer({
 	const playerContainerRef = useRef(null);
 	const controlsTimeoutRef = useRef(null);
 
-	console.log("Video URL:", url);
-
 	const secureUrl = url?.replace("http://", "https://");
-	console.log("Secure URL:", secureUrl);
 
 	const handleSeekChange = (newValue) => {
 		// set the current value as played
