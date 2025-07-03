@@ -33,6 +33,11 @@ function VideoPlayer({
 	const playerContainerRef = useRef(null);
 	const controlsTimeoutRef = useRef(null);
 
+	console.log("Video URL:", url);
+
+	const secureUrl = url?.replace("http://", "https://");
+	console.log("Secure URL:", secureUrl);
+
 	const handleSeekChange = (newValue) => {
 		// set the current value as played
 		setPlayed(newValue[0]);
@@ -101,25 +106,23 @@ function VideoPlayer({
 		if (!document.fullscreenElement) {
 			if (container.requestFullscreen) {
 				container.requestFullscreen();
+			} else if (container.webkitRequestFullscreen) {
+				container.webkitRequestFullscreen(); // For Safari
+			} else if (container.mozRequestFullScreen) {
+				container.mozRequestFullScreen(); // For Firefox
+			} else if (container.msRequestFullscreen) {
+				container.msRequestFullscreen(); // For IE/Edge
 			}
-			// else if (container.webkitRequestFullscreen) {
-			// 	container.webkitRequestFullscreen(); // For Safari
-			// } else if (container.mozRequestFullScreen) {
-			// 	container.mozRequestFullScreen(); // For Firefox
-			// } else if (container.msRequestFullscreen) {
-			// 	container.msRequestFullscreen(); // For IE/Edge
-			// }
 		} else {
 			if (document.exitFullscreen) {
 				document.exitFullscreen();
+			} else if (document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			} else if (document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			} else if (document.msExitFullscreen) {
+				document.msExitFullscreen();
 			}
-			// else if (document.webkitExitFullscreen) {
-			// 	document.webkitExitFullscreen(); // For Safari
-			// } else if (document.mozCancelFullScreen) {
-			// 	document.mozCancelFullScreen(); // For Firefox
-			// } else if (document.msExitFullscreen) {
-			// 	document.msExitFullscreen(); // For IE/Edge
-			// }
 		}
 	}, []);
 
@@ -145,7 +148,7 @@ function VideoPlayer({
 	}, [played]);
 
 	useEffect(() => {
-		setPlaying(false); // If paused is true, set playing to false
+		setPlaying(false);
 	}, [paused]);
 
 	return (
@@ -163,7 +166,7 @@ function VideoPlayer({
 				className="absolute top-0 left-0"
 				width="100%"
 				height="100%"
-				url={url}
+				url={secureUrl}
 				playing={playing}
 				volume={volume}
 				muted={muted}
