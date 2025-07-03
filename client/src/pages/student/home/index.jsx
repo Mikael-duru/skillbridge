@@ -88,12 +88,12 @@ function StudentHomePage() {
 			<div className="container mx-auto bg-white">
 				{/* Banner */}
 				<motion.section className="grid items-center grid-cols-1 gap-16 px-6 py-16 lg:px-8 lg:grid-cols-2">
-					<div className="xl:pr-16 shrink-0 max-lg:text-center">
+					<div className="xl:pr-16 shrink-0 max-lg:text-center lg:w-[40ch] xl:w-full">
 						<motion.h1
 							initial={{ x: -20, opacity: 0 }}
 							whileInView={{ x: 0, opacity: 1 }}
 							transition={{ duration: 0.6, delay: 0.3 }}
-							className="text-4xl font-bold xl:mb-4 xl:text-6xl"
+							className="text-4xl font-bold xl:mb-4 lg:text-5xl xl:text-6xl !leading-[1.2] text-zinc-800"
 						>
 							Gain Future-Proof Tech Skills
 						</motion.h1>
@@ -102,7 +102,7 @@ function StudentHomePage() {
 							initial={{ x: -30, opacity: 0 }}
 							whileInView={{ x: 0, opacity: 1 }}
 							transition={{ duration: 0.8, delay: 0.5 }}
-							className="mt-1.5 mb-6 text-base sm:text-lg xl:mb-8 xl:text-xl text-zinc-600 lg:w-[35ch] xl:w-full"
+							className="max-xl:mt-1.5 mb-8 text-base sm:text-lg xl:mb-10 xl:text-xl text-zinc-600"
 						>
 							Learn. Build. Succeed — with flexible online courses.
 						</motion.p>
@@ -110,10 +110,9 @@ function StudentHomePage() {
 						<motion.a
 							initial={{ opacity: 0, x: -30 }}
 							whileInView={{ opacity: 1, x: 0 }}
-							whileHover={{ scale: 1.05 }}
 							transition={{ duration: 1, delay: 0.7 }}
 							href="/courses"
-							className="inline-block px-8 py-3 text-lg font-semibold text-white rounded-full bg-[#008080] active:scale-95"
+							className="inline-block px-8 py-3 text-lg font-semibold text-white rounded-lg hover:rounded-full bg-[#008080] active:scale-95"
 						>
 							Let&apos;s Get Started
 						</motion.a>
@@ -126,12 +125,12 @@ function StudentHomePage() {
 							type: "spring",
 							stiffness: 50,
 						}}
-						className="overflow-hidden border rounded-lg shadow-lg border-[#008080]/20 shrink-0"
+						className="overflow-hidden border rounded-lg shadow-2xl border-[#008080]/20 shrink-0 hover:shadow-[#008080]/30"
 					>
 						<img
 							src={banner}
 							width={600}
-							height={400}
+							height={600}
 							alt="Student learning online with SkillBridge LMS platform"
 							loading="lazy"
 							className="object-cover w-full h-auto"
