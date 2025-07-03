@@ -222,7 +222,7 @@ function StudentHomePage() {
 								</motion.li>
 							))
 						) : loading ? (
-							<div className="flex items-center justify-center">
+							<div className="col-span-4">
 								<LoadingCircleSpinner />
 							</div>
 						) : (
@@ -247,7 +247,7 @@ function StudentHomePage() {
 								variant="outline"
 								className="border-[#008080] w-full active:scale-95 hover:scale-105 transition-transform duration-300"
 							>
-								View More
+								View All Courses
 							</Button>
 						</motion.div>
 					)}
